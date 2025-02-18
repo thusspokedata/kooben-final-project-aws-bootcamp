@@ -74,6 +74,6 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 }
 
 module "myBucket" {
-  source      = "./modules/s3"
+  source      = "./modules/S3"
   bucket_name = local.s3_sufix
 }
