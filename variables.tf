@@ -3,9 +3,12 @@ variable "kooben_cidr" {
   type = string
 }
 
-variable "kooben_subnets" {
-  description = "a subnets list"
-  type        = list(string)
+variable "public_subnet_cidr" {
+  type = string
+}
+
+variable "private_subnet_cidr" {
+  type = string
 }
 
 variable "tags" {

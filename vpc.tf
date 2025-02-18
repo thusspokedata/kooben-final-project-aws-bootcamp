@@ -5,18 +5,9 @@ resource "aws_vpc" "kooben_vpc" {
   }
 }
 
-resource "aws_subnet" "kooben_subnets" {
-  count      = length(var.kooben_subnets)
-  vpc_id     = aws_vpc.kooben_vpc.id
-  cidr_block = var.kooben_subnets[count.index]
-  tags = {
-    Name = "kooben_subnet-${count.index}-${local.sufix}"
-  }
-}
-
 resource "aws_subnet" "kooben_public_subnet" {
   vpc_id                  = aws_vpc.kooben_vpc.id
-  cidr_block              = var.subnets[0]
+  cidr_block              = var.public_subnet_cidr
   map_public_ip_on_launch = true
   tags = {
     Name = "kooben_public_subnet-${local.sufix}"
@@ -25,11 +16,10 @@ resource "aws_subnet" "kooben_public_subnet" {
 
 resource "aws_subnet" "kooben_private_subnet" {
   vpc_id     = aws_vpc.kooben_vpc.id
-  cidr_block = var.subnets[1]
+  cidr_block = var.private_subnet_cidr
   tags = {
     Name = "kooben_private_subnet-${local.sufix}"
   }
-  depends_on = [aws_subnet.kooben_public_subnet]
 }
 
 resource "aws_internet_gateway" "igw" {
