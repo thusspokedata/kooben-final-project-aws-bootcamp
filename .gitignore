@@ -1,7 +1,10 @@
 *.pem
 terraform.tfstate
-terraform.tfstate*
-.terraform*
+terraform.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+.terraformrc
+.tfc-agent/
 .DS_Store
 .infracost
 .tflint.hcl
