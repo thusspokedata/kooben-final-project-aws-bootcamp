@@ -94,15 +94,6 @@ module "myBucket" {
 ```
 Run `terraform init -reconfigure` to reload modules.
 
-### **Error: `failed to get shared config profile`**
-✔ **Solution**: Ensure the AWS profile exists. Check with:
-```bash
-aws configure list-profiles
-```
-If missing, configure AWS credentials:
-```bash
-aws configure --profile kooben
-```
 
 ## **🔗 Useful Links**
 - [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
@@ -114,7 +105,3 @@ aws configure --profile kooben
 - Deploy new services (e.g., ECS, RDS, Lambda)
 - Implement monitoring (CloudWatch, Prometheus)
 - Automate CI/CD for Terraform deployments
-
----
-
-

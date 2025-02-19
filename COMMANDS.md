@@ -34,7 +34,7 @@ infracost auth login
 # Generate a cost breakdown for the Terraform configuration
 
 ```bash
-infracost breakdown --path .
+infracost breakdown --path ./infra
 ```
 
 # Run a security scan on the Terraform configuration using tfsec
@@ -56,3 +56,6 @@ brew install tflint
 ```bash
 terraform validate
 ```
+
+
+terraform fmt -recursive 
