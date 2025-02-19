@@ -21,7 +21,12 @@ variable "sg_ingress_cidr" {
   type        = string
 }
 
-variable "ingress_ports_list" {
+variable "ingress_ports_list_backend" {
+  description = "a list of ingress ports"
+  type        = list(number)
+}
+
+variable "ingress_ports_list_frontend" {
   description = "a list of ingress ports"
   type        = list(number)
 }

@@ -1,14 +1,14 @@
 resource "aws_security_group" "sg_public_instance" {
   name        = "public_instance_sg"
-  description = "Allow SSH, HTTPS, and HTTP inbound traffic and all outbound traffic"
+  description = "Security Group for Frontend: Allows HTTP (80), HTTPS (443), SSH (22), and Port 4000."
   vpc_id      = aws_vpc.kooben_vpc.id
 
   tags = {
-    Name = "Public instance security group-${local.sufix}"
+    Name = "sg_frontend-${local.sufix}"
   }
 
   dynamic "ingress" {
-    for_each = var.ingress_ports_list
+    for_each = toset(var.ingress_ports_list_frontend)
     content {
       from_port   = ingress.value
       to_port     = ingress.value
