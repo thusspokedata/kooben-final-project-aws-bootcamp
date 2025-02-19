@@ -46,7 +46,7 @@ terraform apply       # Apply changes to AWS
 ### **3️⃣ Running Security and Cost Analysis**
 ```bash
 infracost breakdown --path ./infra  # Cost estimation
-tflint                              # Install TFLint
+tflint                              # run tfLint
 tfsec                               # Run security analysis
 ```
 
