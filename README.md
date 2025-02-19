@@ -82,10 +82,7 @@ If using **Terraform Cloud**, ensure:
 ✔ **Solution**: Ensure Terraform Cloud is looking in the correct directory (`infra/`).
 
 ### **Error: `Unreadable module directory`**
-✔ **Solution**: Verify that `modules/` exists and contains the necessary files. If missing, create it:
-```bash
-mkdir modules
-```
+✔ **Solution**: 
 If the module is in `modules/S3/`, update `main.tf`:
 ```hcl
 module "myBucket" {
