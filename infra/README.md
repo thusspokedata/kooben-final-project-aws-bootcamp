@@ -106,13 +106,27 @@ Run `terraform init -reconfigure` to reload modules.
 
 ---
 
+## 🔒 Security Improvements Based on `tfsec` Recommendations
+
+| 🚨 **Issue** | 🔧 **Solution** |
+|-------------|---------------|
+| **No public access block so not blocking public ACLs** | Block public ACLs with `aws_s3_bucket_public_access_block` |
+| **No public access block so not blocking public policies** | Block public policies with `aws_s3_bucket_public_access_block` |
+| **Bucket does not have encryption enabled** | Enable encryption with `aws_s3_bucket_server_side_encryption_configuration` using **AWS KMS** |
+| **Bucket does not encrypt data with a customer-managed key** | Use **AWS KMS** key for encryption instead of default AWS-managed keys |
+| **No public access block so not restricting public buckets** | Restrict public access with `aws_s3_bucket_public_access_block` |
+| **Bucket does not have logging enabled** | Configure bucket logging with `aws_s3_bucket_logging` |
+| **Bucket does not have versioning enabled** | Enable versioning with `aws_s3_bucket_versioning` |
+
+
+---
+
+
 ## **🔗 Useful Links**
 - [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
 - [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
 - [Infracost Documentation](https://www.infracost.io/docs/)
 - [TFLint Documentation](https://github.com/terraform-linters/tflint)
-
----
 
 ## **📌 Next Steps**
 - Deploy new services (e.g., EC2-backend, EC2-frontend, RDS)

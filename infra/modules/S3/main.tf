@@ -1,3 +1,49 @@
-resource "aws_s3_bucket" "kooben_bucket" {
+# Create a Customer-Managed KMS Key for S3 Encryption (tfsec recommendation)
+resource "aws_kms_key" "kooben_storage_kms" {
+  description             = "KMS key for encrypting the storage bucket"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+}
+
+# General Storage Bucket (tfsec recommendation)
+resource "aws_s3_bucket" "kooben_storage_bucket" {
   bucket = var.bucket_name
+}
+
+# Block all public access (tfsec recommendation)
+resource "aws_s3_bucket_public_access_block" "kooben_storage_bucket" {
+  bucket = aws_s3_bucket.kooben_storage_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+# Enable encryption using AWS KMS Key (tfsec recommendation)
+resource "aws_s3_bucket_server_side_encryption_configuration" "kooben_storage_bucket" {
+  bucket = aws_s3_bucket.kooben_storage_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.kooben_storage_kms.arn
+    }
+  }
+}
+
+# Enable versioning to track changes & prevent accidental deletions (tfsec recommendation)
+resource "aws_s3_bucket_versioning" "kooben_storage_bucket" {
+  bucket = aws_s3_bucket.kooben_storage_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# Enable logging inside the same bucket (optional, only if needed for audit logs) (tfsec recommendation)
+resource "aws_s3_bucket_logging" "kooben_storage_bucket" {
+  bucket        = aws_s3_bucket.kooben_storage_bucket.id
+  target_bucket = aws_s3_bucket.kooben_storage_bucket.id
+  target_prefix = "logs/"
 }
