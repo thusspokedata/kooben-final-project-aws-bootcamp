@@ -46,8 +46,8 @@ terraform apply       # Apply changes to AWS
 ### **3️⃣ Running Security and Cost Analysis**
 ```bash
 infracost breakdown --path ./infra  # Cost estimation
-tflint                              # run tfLint
-tfsec                               # Run security analysis
+tflint                              # Run Terraform Linter to check for best practices
+tfsec                               # Perform security analysis on Terraform configuration
 ```
 
 ### **4️⃣ Managing AWS Infrastructure**
@@ -102,6 +102,10 @@ Run `terraform init -reconfigure` to reload modules.
 - [TFLint Documentation](https://github.com/terraform-linters/tflint)
 
 ## **📌 Next Steps**
-- Deploy new services (e.g., ECS, RDS, Lambda)
-- Implement monitoring (CloudWatch, Prometheus)
+- Deploy new services (e.g., EC2-backend, EC2-frontend, RDS)
+- Implement monitoring (CloudWatch, CloudTrail)
 - Automate CI/CD for Terraform deployments
+- Integrate Route 53 for domain management
+- Create Auto Scaling Group for dynamic scaling
+- Configure Launch Templates for backend and frontend instances
+- Deploy an Application Load Balancer (ALB)

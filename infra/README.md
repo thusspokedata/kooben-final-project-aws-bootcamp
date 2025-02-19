@@ -121,3 +121,7 @@ Run `terraform init -reconfigure` to reload modules.
 - Deploy new services (e.g., EC2-backend, EC2-frontend, RDS)
 - Implement monitoring (CloudWatch, CloudTrail)
 - Automate CI/CD for Terraform deployments
+- Integrate Route 53 for domain management
+- Create Auto Scaling Group for dynamic scaling
+- Configure Launch Templates for backend and frontend instances
+- Deploy an Application Load Balancer (ALB)
