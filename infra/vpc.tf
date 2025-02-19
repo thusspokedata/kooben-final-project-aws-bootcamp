@@ -76,10 +76,11 @@ resource "aws_iam_role_policy_attachment" "flow_logs_policy_attach" {
 
 # VPC Flow Logs with IAM Role for logging to S3
 resource "aws_flow_log" "kooben_vpc_logs" {
-  log_destination = module.myBucket.bucket_arn
-  traffic_type    = "ALL"
-  vpc_id          = aws_vpc.kooben_vpc.id
-  iam_role_arn    = aws_iam_role.flow_logs_role.arn
+  log_destination      = "${module.myBucket.bucket_arn}/vpc-flow-logs/"
+  log_destination_type = "s3"
+  traffic_type        = "ALL"
+  vpc_id              = aws_vpc.kooben_vpc.id
+  iam_role_arn        = aws_iam_role.flow_logs_role.arn
 }
 
 data "aws_caller_identity" "current" {}
