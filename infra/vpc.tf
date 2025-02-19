@@ -81,3 +81,5 @@ resource "aws_flow_log" "kooben_vpc_logs" {
   vpc_id          = aws_vpc.kooben_vpc.id
   iam_role_arn    = aws_iam_role.flow_logs_role.arn
 }
+
+data "aws_caller_identity" "current" {}
