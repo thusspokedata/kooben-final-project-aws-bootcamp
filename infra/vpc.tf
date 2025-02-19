@@ -44,18 +44,27 @@ resource "aws_iam_policy" "flow_logs_policy" {
 
   policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Action = [
-        "s3:PutObject",
-        "s3:GetBucketAcl",
-        "s3:ListBucket"
-      ]
-      Resource = [
-        aws_s3_bucket.kooben_bucket_logs.arn,
-        "${aws_s3_bucket.kooben_bucket_logs.arn}/*"
-      ]
-    }]
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:PutObject"
+        ]
+        Resource = [
+          "${module.myBucket.bucket_arn}/vpc-flow-logs/AWSLogs/${data.aws_caller_identity.current.account_id}/*" # Restricting to specific AWSLogs path (tfsec recommendation)
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetBucketAcl",
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "${module.myBucket.bucket_arn}"
+        ]
+      }
+    ]
   })
 }
 
@@ -67,8 +76,8 @@ resource "aws_iam_role_policy_attachment" "flow_logs_policy_attach" {
 
 # VPC Flow Logs with IAM Role for logging to S3
 resource "aws_flow_log" "kooben_vpc_logs" {
-  log_destination = aws_s3_bucket.kooben_bucket_logs.arn
+  log_destination = module.myBucket.bucket_arn
   traffic_type    = "ALL"
-  vpc_id         = aws_vpc.kooben_vpc.id
-  iam_role_arn   = aws_iam_role.flow_logs_role.arn
+  vpc_id          = aws_vpc.kooben_vpc.id
+  iam_role_arn    = aws_iam_role.flow_logs_role.arn
 }
