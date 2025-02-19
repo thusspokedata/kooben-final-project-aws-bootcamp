@@ -1,6 +1,6 @@
 variable "kooben_cidr" {
   description = "value of the CIDR block for the Frankfurt VPC"
-  type = string
+  type        = string
 }
 
 variable "public_subnet_cidr" {
@@ -32,9 +32,9 @@ variable "ingress_ports_list_frontend" {
 }
 
 variable "access_key" {
-    type = string
+  type = string
 }
 
 variable "secret_key" {
-    type = string
+  type = string
 }

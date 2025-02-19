@@ -5,7 +5,7 @@ terraform {
       version = "5.86.0"
     }
     random = { # this is a provider for generating random strings
-      source  = "hashicorp/random" 
+      source  = "hashicorp/random"
       version = "3.6.3"
     }
 
@@ -14,7 +14,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region     = "eu-central-1"
   access_key = var.access_key
   secret_key = var.secret_key
   default_tags {

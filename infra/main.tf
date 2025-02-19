@@ -4,10 +4,10 @@ module "myBucket" {
 }
 
 module "security_groups" {
-  source                     = "./modules/security_groups"
-  vpc_id                     = aws_vpc.kooben_vpc.id
-  sufix                      = local.sufix
-  ingress_ports_list_backend = var.ingress_ports_list_backend
+  source                      = "./modules/security_groups"
+  vpc_id                      = aws_vpc.kooben_vpc.id
+  sufix                       = local.sufix
+  ingress_ports_list_backend  = var.ingress_ports_list_backend
   ingress_ports_list_frontend = var.ingress_ports_list_frontend
-  sg_ingress_cidr            = var.sg_ingress_cidr
+  sg_ingress_cidr             = var.sg_ingress_cidr
 }
