@@ -26,8 +26,15 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 │   │   │   ├── output.tf
 │   │   │   ├── variables.tf
 ├── .gitignore             # Files ignored by Git
-├── COMMANDS.md            # List of useful Terraform commands
 ├── README.md              # Project documentation
+├── documentacion/         # Project documentation folder
+│   ├── s3.md              # Documentation for S3 configuration
+│   ├── COMMANDS.md        # List of useful Terraform commands
+│   ├── tools-i-used/      # Documentation for tools used
+│   │   ├── infracost.md   # Infracost documentation
+│   │   ├── tfenv.md       # tfenv documentation
+│   │   ├── tfsec.md       # tfsec documentation
+│   │   ├── tflint.md      # tflint documentation
 ```
 
 ---
@@ -37,9 +44,10 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 Ensure you have the following installed:
 - [Terraform](https://developer.hashicorp.com/terraform/downloads)
 - [AWS CLI](https://aws.amazon.com/cli/)
-- [tfenv](https://github.com/tfutils/tfenv) (for managing Terraform versions)
-- [TFLint](https://github.com/terraform-linters/tflint) (for linting)
-- [Infracost](https://www.infracost.io/) (for cost estimation)
+- [tfenv](https://github.com/tfutils/tfenv) (for managing Terraform versions) ([Documentation](documentacion/tools-i-used/tfenv.md))
+- [TFLint](https://github.com/terraform-linters/tflint) (for linting) ([Documentation](documentacion/tools-i-used/tflint.md))
+- [Infracost](https://www.infracost.io/) (for cost estimation) ([Documentation](documentacion/tools-i-used/infracost.md))
+- [tfsec](https://aquasecurity.github.io/tfsec/) (for security analysis) ([Documentation](documentacion/tools-i-used/tfsec.md))
 
 ### **2️⃣ Setting Up Terraform**
 ```bash
@@ -59,74 +67,16 @@ tflint                              # Run Terraform Linter to check for best pra
 tfsec                               # Perform security analysis on Terraform configuration
 ```
 
-### **4️⃣ Managing AWS Infrastructure**
-#### **Check Available Terraform Versions**
-```bash
-tfenv list-remote   # List available Terraform versions
-tfenv list          # List installed Terraform versions
-```
-
-#### **Run Terraform Commands**
-```bash
-terraform fmt       # Format Terraform files
-terraform validate  # Validate configuration
-terraform plan      # Show execution plan
-terraform apply     # Deploy infrastructure
-terraform destroy   # Destroy infrastructure
-```
-
 ---
-
-## **🌍 Configuring Terraform Cloud**
-If using **Terraform Cloud**, ensure:
-1. **AWS credentials are stored in Terraform Cloud**:
-   - `access_key`
-   - `secret_key`
-2. The **Terraform Working Directory** is set to:
-   ```
-   infra/
-   ```
-3. The workspace is configured to automatically trigger runs on new commits.
-
----
-
-## **🐞 Troubleshooting**
-### **Error: `No Terraform configuration files found in working directory`**
-✔ **Solution**: Ensure Terraform Cloud is looking in the correct directory (`infra/`).
-
-### **Error: `Unreadable module directory`**
-✔ **Solution**: 
-If the module is in `modules/S3/`, update `main.tf`:
-```hcl
-module "myBucket" {
-  source = "./modules/S3"
-}
-```
-Run `terraform init -reconfigure` to reload modules.
-
----
-
-## 🔒 Security Improvements Based on `tfsec` Recommendations
-
-| 🚨 **Issue** | 🔧 **Solution** |
-|-------------|---------------|
-| **No public access block so not blocking public ACLs** | Block public ACLs with `aws_s3_bucket_public_access_block` |
-| **No public access block so not blocking public policies** | Block public policies with `aws_s3_bucket_public_access_block` |
-| **Bucket does not have encryption enabled** | Enable encryption with `aws_s3_bucket_server_side_encryption_configuration` using **AWS KMS** |
-| **Bucket does not encrypt data with a customer-managed key** | Use **AWS KMS** key for encryption instead of default AWS-managed keys |
-| **No public access block so not restricting public buckets** | Restrict public access with `aws_s3_bucket_public_access_block` |
-| **Bucket does not have logging enabled** | Configure bucket logging with `aws_s3_bucket_logging` |
-| **Bucket does not have versioning enabled** | Enable versioning with `aws_s3_bucket_versioning` |
-
-
----
-
 
 ## **🔗 Useful Links**
 - [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
 - [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
-- [Infracost Documentation](https://www.infracost.io/docs/)
-- [TFLint Documentation](https://github.com/terraform-linters/tflint)
+- [Infracost Documentation](documentacion/tools-i-used/infracost.md)
+- [TFLint Documentation](documentacion/tools-i-used/tflint.md)
+- [tfenv Documentation](documentacion/tools-i-used/tfenv.md)
+- [tfsec Documentation](documentacion/tools-i-used/tfsec.md)
+- [S3 Configuration Documentation](documentacion/s3.md)
 
 ## **📌 Next Steps**
 - Deploy new services (e.g., EC2-backend, EC2-frontend, RDS)
@@ -136,3 +86,4 @@ Run `terraform init -reconfigure` to reload modules.
 - Create Auto Scaling Group for dynamic scaling
 - Configure Launch Templates for backend and frontend instances
 - Deploy an Application Load Balancer (ALB)
+
