@@ -47,3 +47,20 @@ resource "aws_s3_bucket_logging" "kooben_storage_bucket" {
   target_bucket = aws_s3_bucket.kooben_storage_bucket.id
   target_prefix = "logs/"
 }
+
+# Upload non-sensitive files to the bucket
+resource "aws_s3_object" "docker_compose" {
+  bucket = aws_s3_bucket.kooben_storage_bucket.id
+  key    = "docker-compose.yml"
+  source = "${path.module}/files/docker-compose.yml"
+}
+
+# Create a secret in AWS Secrets Manager for sensitive environment variables
+resource "aws_secretsmanager_secret" "app_env" {
+  name = "app-env-${var.bucket_name}"
+}
+
+resource "aws_secretsmanager_secret_version" "app_env" {
+  secret_id     = aws_secretsmanager_secret.app_env.id
+  secret_string = jsonencode(var.environment_variables)
+}
