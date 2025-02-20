@@ -71,3 +71,13 @@ module "backend_template" {
   s3_bucket_name            = module.myBucket.s3_bucket_name
   sufix                     = local.sufix
 }
+
+module "ec2-rds-scheduler" {
+  source                      = "eanselmi/ec2-rds-scheduler/aws"
+  version                     = "1.0.5"
+  ec2_start_stop_schedules    = var.ec2_start_stop_schedules
+  rds_start_stop_schedules    = var.rds_start_stop_schedules
+  asg_start_stop_schedules    = var.asg_start_stop_schedules
+  timezone                    = var.timezone
+
+}

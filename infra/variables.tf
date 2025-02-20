@@ -92,3 +92,30 @@ variable "clerk_secret_key" {
   type        = string
   sensitive   = true
 }
+
+###########################################
+# Start/Stop Schedules for EC2, RDS, ASG #
+##########################################
+variable "ec2_start_stop_schedules" {
+  description = "Schedules and tags to turn off and turn on ec2 instances"
+  type        = map(map(string))
+  default     = {}
+}
+
+
+variable "rds_start_stop_schedules" {
+  description = "Schedules and tags to turn off and turn on RDS instances"
+  type        = map(map(string))
+  default     = {}
+}
+
+variable "asg_start_stop_schedules" {
+  description = "Schedules and tags to turn off and turn on EC2 instances using an ASG"
+  type        = map(map(string))
+  default     = {}
+}
+
+variable "timezone" {
+  description = "Timezone for Schedules"
+  type        = string
+}
