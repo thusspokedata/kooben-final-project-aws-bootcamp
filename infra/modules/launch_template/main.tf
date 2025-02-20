@@ -18,7 +18,8 @@ resource "aws_launch_template" "backend_template" {
   }
 
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {
-    s3_bucket_name = var.s3_bucket_name
+    s3_bucket_name         = var.s3_bucket_name
+    docker_compose_version = var.docker_compose_version
   }))
 
   tag_specifications {

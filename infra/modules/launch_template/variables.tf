@@ -19,4 +19,10 @@ variable "s3_bucket_name" {
 variable "sufix" {
   description = "Suffix for resource naming"
   type        = string
+}
+
+variable "docker_compose_version" {
+  description = "Version of Docker Compose to install"
+  type        = string
+  default     = "2.20.2"  # Default version if not specified
 } 
