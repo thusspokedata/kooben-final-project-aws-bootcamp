@@ -10,6 +10,7 @@ module "vpc" {
   private_subnet_cidr = var.private_subnet_cidr
   sufix             = var.sufix
   tags              = var.tags
+  random_suffix     = var.random_suffix
 }
 
 module "routing" {
