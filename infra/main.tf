@@ -17,7 +17,7 @@ module "database" {
   database_password          = var.db_password
   instance_class             = var.rds_instance_class
   database_security_group_id = module.security_groups.database_security_group_id
-  private_subnet_ids         = [module.networking.private_subnet_id]
+  private_subnet_ids         = module.networking.private_subnet_ids
 }
 
 module "myBucket" {

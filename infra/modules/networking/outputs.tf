@@ -9,6 +9,6 @@ output "public_subnet_id" {
 }
 
 output "private_subnet_ids" {
-  description = "IDs of the private subnets"
+  description = "List of private subnet IDs"
   value       = module.vpc.private_subnet_ids
 } 
