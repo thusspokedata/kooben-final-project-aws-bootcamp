@@ -17,8 +17,7 @@ sudo ./aws/install
 rm -rf awscliv2.zip aws
 
 # 4. Install Docker Compose
-DOCKER_COMPOSE_VERSION="${docker_compose_version}"
-sudo curl -L "https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/v${docker_compose_version}/docker-compose-\$(uname -s)-\$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 # 5. Create application directory and navigate to it
@@ -26,9 +25,8 @@ mkdir -p /home/ubuntu/app
 cd /home/ubuntu/app
 
 # 6. Download required files from S3
-AWS_BUCKET=${s3_bucket_name}
-aws s3 cp s3://$AWS_BUCKET/docker-compose.yml .
-aws s3 cp s3://$AWS_BUCKET/.env .
+aws s3 cp s3://${s3_bucket_name}/docker-compose.yml .
+aws s3 cp s3://${s3_bucket_name}/.env .
 
 # 7. Set proper permissions and load environment variables
 chmod 600 .env
