@@ -24,5 +24,5 @@ variable "sufix" {
 variable "docker_compose_version" {
   description = "Version of Docker Compose to install"
   type        = string
-  default     = "2.20.2"  # Default version if not specified
+  default     = "2.20.2" # Default version if not specified
 } 

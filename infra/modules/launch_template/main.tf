@@ -6,13 +6,13 @@ resource "aws_launch_template" "backend_template" {
 
   network_interfaces {
     associate_public_ip_address = true
-    security_groups            = [var.backend_security_group_id]
+    security_groups             = [var.backend_security_group_id]
   }
 
   # Add metadata options to enforce IMDSv2 (tfsec recommendation)
   metadata_options {
     http_endpoint               = "enabled"
-    http_tokens                 = "required"  # Enforce IMDSv2
+    http_tokens                 = "required" # Enforce IMDSv2
     http_put_response_hop_limit = 1
     instance_metadata_tags      = "enabled"
   }

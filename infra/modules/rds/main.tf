@@ -8,9 +8,9 @@ resource "aws_kms_key" "rds_encryption_key" {
 # Create the RDS instance
 resource "aws_db_instance" "kooben_db" {
   identifier        = "kooben-db-${var.sufix}"
-  engine           = "postgres"
-  engine_version   = "16.3"
-  instance_class   = var.instance_class
+  engine            = "postgres"
+  engine_version    = "16.3"
+  instance_class    = var.instance_class
   allocated_storage = 20
 
   db_name  = var.database_name
@@ -21,25 +21,25 @@ resource "aws_db_instance" "kooben_db" {
   db_subnet_group_name   = aws_db_subnet_group.kooben.name
 
   # Enhanced security (tfsec recommendations)
-  storage_encrypted          = true
-  kms_key_id                = aws_kms_key.rds_encryption_key.arn
-  deletion_protection       = true
+  storage_encrypted                   = true
+  kms_key_id                          = aws_kms_key.rds_encryption_key.arn
+  deletion_protection                 = true
   iam_database_authentication_enabled = true
-  skip_final_snapshot       = false
-  
+  skip_final_snapshot                 = false
+
   # Performance monitoring (tfsec recommendation)
-  performance_insights_enabled = true
-  performance_insights_kms_key_id = aws_kms_key.rds_encryption_key.arn
+  performance_insights_enabled          = true
+  performance_insights_kms_key_id       = aws_kms_key.rds_encryption_key.arn
   performance_insights_retention_period = 7
 
   # Backup configuration
   backup_retention_period = 7
-  backup_window          = "03:00-04:00"
-  maintenance_window     = "Mon:04:00-Mon:05:00"
+  backup_window           = "03:00-04:00"
+  maintenance_window      = "Mon:04:00-Mon:05:00"
 
   # Network configuration
-  multi_az               = false  # Set to true for production
-  publicly_accessible    = false
+  multi_az            = false # Set to true for production
+  publicly_accessible = false
 
   tags = {
     Name = "kooben-db-${var.sufix}"
