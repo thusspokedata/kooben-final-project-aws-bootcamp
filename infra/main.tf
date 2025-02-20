@@ -3,8 +3,8 @@ module "database" {
   
   sufix                     = local.sufix
   database_name            = "kooben"
-  database_user            = "admin"
-  database_password        = var.database_password  # Definir en terraform.tfvars
+  database_user            = var.db_username
+  database_password        = var.db_password
   database_security_group_id = module.security_groups.database_security_group_id
   private_subnet_ids       = [aws_subnet.kooben_private_subnet.id]
 }
@@ -13,9 +13,7 @@ module "myBucket" {
   source      = "./modules/S3"
   bucket_name = local.s3_sufix
   environment_variables = {
-    DATABASE_URL = "postgresql://${module.database.username}:${var.database_password}@${module.database.endpoint}:${module.database.port}/${module.database.database_name}"
-    API_KEY     = var.api_key
-    # Agrega aquí otras variables de entorno
+    DATABASE_URL = "postgresql://${module.database.username}:${var.db_password}@${module.database.endpoint}:${module.database.port}/${module.database.database_name}"
   }
 }
 

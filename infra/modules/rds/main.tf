@@ -20,11 +20,18 @@ resource "aws_db_instance" "kooben_db" {
   vpc_security_group_ids = [var.database_security_group_id]
   db_subnet_group_name   = aws_db_subnet_group.kooben.name
 
-  # Enhanced security
-  storage_encrypted   = true
-  kms_key_id         = aws_kms_key.rds_encryption_key.arn
-  skip_final_snapshot = false
+  # Enhanced security (tfsec recommendations)
+  storage_encrypted          = true
+  kms_key_id                = aws_kms_key.rds_encryption_key.arn
+  deletion_protection       = true
+  iam_database_authentication_enabled = true
+  skip_final_snapshot       = false
   
+  # Performance monitoring (tfsec recommendation)
+  performance_insights_enabled = true
+  performance_insights_kms_key_id = aws_kms_key.rds_encryption_key.arn
+  performance_insights_retention_period = 7
+
   # Backup configuration
   backup_retention_period = 7
   backup_window          = "03:00-04:00"
