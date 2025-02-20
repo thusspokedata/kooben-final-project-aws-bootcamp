@@ -9,6 +9,14 @@ resource "aws_launch_template" "backend_template" {
     security_groups            = [var.backend_security_group_id]
   }
 
+  # Add metadata options to enforce IMDSv2 (tfsec recommendation)
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"  # Enforce IMDSv2
+    http_put_response_hop_limit = 1
+    instance_metadata_tags      = "enabled"
+  }
+
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {
     s3_bucket_name = var.s3_bucket_name
   }))
