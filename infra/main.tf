@@ -74,6 +74,7 @@ module "backend_template" {
 
 module "ec2-rds-scheduler" {
   source                      = "github.com/thusspokedata/terraform-aws-ec2-rds-scheduler"
+  aws_region                  = data.aws_region.current.name
   ec2_start_stop_schedules    = var.ec2_start_stop_schedules
   rds_start_stop_schedules    = var.rds_start_stop_schedules
   asg_start_stop_schedules    = var.asg_start_stop_schedules
