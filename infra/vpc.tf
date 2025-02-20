@@ -51,7 +51,7 @@ resource "aws_iam_policy" "flow_logs_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "${module.myBucket.bucket_arn}/vpc-flow-logs/AWSLogs/${data.aws_caller_identity.current.account_id}/*" # Restricting to specific AWSLogs path (tfsec recommendation)
+          "${module.myBucket.s3_bucket_arn}/vpc-flow-logs/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
         ]
       },
       {
@@ -61,7 +61,7 @@ resource "aws_iam_policy" "flow_logs_policy" {
           "s3:ListBucket"
         ]
         Resource = [
-          "${module.myBucket.bucket_arn}"
+          module.myBucket.s3_bucket_arn
         ]
       }
     ]
@@ -76,7 +76,7 @@ resource "aws_iam_role_policy_attachment" "flow_logs_policy_attach" {
 
 # VPC Flow Logs with S3 destination
 resource "aws_flow_log" "kooben_vpc_logs" {
-  log_destination      = "${module.myBucket.bucket_arn}/vpc-flow-logs/"
+  log_destination      = "${module.myBucket.s3_bucket_arn}/vpc-flow-logs/"
   log_destination_type = "s3"
   traffic_type        = "ALL"
   vpc_id              = aws_vpc.kooben_vpc.id

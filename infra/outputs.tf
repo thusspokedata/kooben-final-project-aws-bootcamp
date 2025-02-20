@@ -1,17 +1,17 @@
 # S3 Outputs
 output "s3_bucket_arn" {
   description = "The ARN of the S3 bucket"
-  value       = module.myBucket.bucket_arn
+  value       = module.myBucket.s3_bucket_arn
 }
 
 output "s3_bucket_name" {
   description = "The name of the S3 bucket"
-  value       = module.myBucket.bucket_name
+  value       = module.myBucket.s3_bucket_name
 }
 
 output "s3_bucket_id" {
   description = "The ID of the S3 bucket"
-  value       = module.myBucket.bucket_id
+  value       = module.myBucket.s3_bucket_id
 }
 
 # Security Groups Outputs
