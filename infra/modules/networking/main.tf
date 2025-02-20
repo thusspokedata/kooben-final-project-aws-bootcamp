@@ -1,3 +1,7 @@
+# Add data sources at the top of the file
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 module "vpc" {
   source = "./modules/vpc"
 
@@ -11,18 +15,10 @@ module "vpc" {
 module "routing" {
   source = "./modules/routing"
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id           = module.vpc.vpc_id
   public_subnet_id = module.vpc.public_subnet_id
-  sufix = var.sufix
-  tags  = var.tags
-}
-
-module "flow_logs" {
-  source = "./modules/flow_logs"
-
-  vpc_id = module.vpc.vpc_id
-  sufix  = var.sufix
-  tags   = var.tags
+  sufix           = var.sufix
+  tags            = var.tags
 }
 
 # Create KMS key for CloudWatch Logs encryption
@@ -119,8 +115,4 @@ resource "aws_flow_log" "vpc_flow_log" {
   tags = merge(var.tags, {
     Name = "vpc-flow-log-${var.sufix}"
   })
-}
-
-# Add data sources at the top of the file
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {} 
+} 
