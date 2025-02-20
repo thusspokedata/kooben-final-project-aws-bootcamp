@@ -3,6 +3,15 @@
 ## **📌 Overview**
 This repository contains the infrastructure configuration for the **Kooben** project using **Terraform**. It is designed to deploy an AWS-based architecture, including a **VPC, subnets, security groups, and an S3 bucket**.
 
+## **🔰 Recent Updates**
+- Added EC2 and RDS scheduler for cost optimization (23:00-06:00 Berlin time)
+- Created fork of ec2-rds-scheduler module to fix security warnings:
+  - Restricted IAM policies
+  - Enabled Lambda tracing
+  - Improved security practices
+- Added environment variables management through AWS Secrets Manager
+- Implemented Launch Template with auto-update to latest version
+
 ---
 
 ## **🛠 Project Structure**
@@ -103,10 +112,12 @@ tfsec                               # Perform security analysis on Terraform con
 - [S3 Configuration Documentation](documentacion/s3.md)
 
 ## **📌 Next Steps**
+- Configure Launch Templates for backend instance ✅
+- Implement cost optimization through scheduling ✅
 - Deploy new services (e.g., EC2-backend, EC2-frontend, RDS)
 - Implement monitoring (CloudWatch, CloudTrail)
 - Automate CI/CD for Terraform deployments
 - Integrate Route 53 for domain management
 - Create Auto Scaling Group for dynamic scaling
-- Configure Launch Templates for backend and frontend instances
+- Configure Launch Templates for frontend instance
 - Deploy an Application Load Balancer (ALB)
