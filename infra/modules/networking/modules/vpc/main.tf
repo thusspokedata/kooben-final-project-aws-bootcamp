@@ -75,6 +75,7 @@ resource "aws_iam_role" "vpc_flow_log_role" {
 
 # IAM Role Policy for VPC Flow Logs
 resource "aws_iam_role_policy" "vpc_flow_log_policy" {
+
   name = "vpc-flow-log-policy-${var.sufix}-${var.random_suffix}"
   role = aws_iam_role.vpc_flow_log_role.id
 
