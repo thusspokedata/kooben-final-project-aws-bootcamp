@@ -57,3 +57,8 @@ variable "db_username" {
   description = "Master username for RDS instance"
   type        = string
 }
+
+variable "rds_instance_class" {
+  description = "RDS instance class"
+  type        = string
+}

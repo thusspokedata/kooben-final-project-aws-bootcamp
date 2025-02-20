@@ -9,7 +9,7 @@ resource "aws_kms_key" "rds_encryption_key" {
 resource "aws_db_instance" "kooben_db" {
   identifier        = "kooben-db-${var.sufix}"
   engine           = "postgres"
-  engine_version   = "14"
+  engine_version   = "16.3"
   instance_class   = var.instance_class
   allocated_storage = 20
 

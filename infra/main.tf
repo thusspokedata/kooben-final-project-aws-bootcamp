@@ -5,6 +5,7 @@ module "database" {
   database_name            = "kooben"
   database_user            = var.db_username
   database_password        = var.db_password
+  instance_class           = var.rds_instance_class
   database_security_group_id = module.security_groups.database_security_group_id
   private_subnet_ids       = [aws_subnet.kooben_private_subnet.id]
 }
