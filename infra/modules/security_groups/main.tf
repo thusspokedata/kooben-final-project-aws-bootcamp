@@ -58,18 +58,20 @@ resource "aws_security_group" "sg_database" {
 
   # Allow inbound PostgreSQL traffic from backend
   ingress {
+    description     = "Allow PostgreSQL access from backend instances"
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
     security_groups = [aws_security_group.sg_backend.id]
   }
 
-  # Block all outbound traffic by default
+  # Restrict outbound traffic to VPC CIDR only
   egress {
+    description = "Allow outbound traffic to VPC only"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.vpc_cidr]  # Restrict outbound traffic to VPC CIDR only
   }
 
   tags = {

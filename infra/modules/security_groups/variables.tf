@@ -22,3 +22,8 @@ variable "sg_ingress_cidr" {
   description = "CIDR block for security group ingress rules"
   type        = string
 }
+
+variable "vpc_cidr" {
+  description = "CIDR block of the VPC"
+  type        = string
+}
