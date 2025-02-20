@@ -22,3 +22,7 @@ ec2_specs = {
   "instance_type" = "t2.micro"
   "ami"           = "ami-07eef52105e8a2059"
 }
+
+# Database credentials
+db_username = var.db_username
+db_password = var.db_password
