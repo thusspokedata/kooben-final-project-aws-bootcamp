@@ -1,3 +1,7 @@
+# Add data sources at the top of the file
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 module "networking" {
   source = "./modules/networking"
 
