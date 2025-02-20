@@ -1,6 +1,0 @@
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.kooben_vpc.id
-  tags = {
-    Name = "igw_kooben-${local.sufix}"
-  }
-}

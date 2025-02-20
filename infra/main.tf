@@ -1,13 +1,23 @@
+module "networking" {
+  source = "./modules/networking"
+
+  vpc_cidr           = var.kooben_cidr
+  public_subnet_cidr = var.public_subnet_cidr
+  private_subnet_cidr = var.private_subnet_cidr
+  sufix              = local.sufix
+  tags               = var.tags
+}
+
 module "database" {
   source = "./modules/rds"
   
   sufix                     = local.sufix
-  database_name            = "kooben"
+  database_name            = "koobenDB"
   database_user            = var.db_username
   database_password        = var.db_password
   instance_class           = var.rds_instance_class
   database_security_group_id = module.security_groups.database_security_group_id
-  private_subnet_ids       = [aws_subnet.kooben_private_subnet.id]
+  private_subnet_ids       = [module.networking.private_subnet_id]
 }
 
 module "myBucket" {
@@ -20,7 +30,7 @@ module "myBucket" {
 
 module "security_groups" {
   source                      = "./modules/security_groups"
-  vpc_id                      = aws_vpc.kooben_vpc.id
+  vpc_id                      = module.networking.vpc_id
   vpc_cidr                    = var.kooben_cidr
   sufix                       = local.sufix
   ingress_ports_list_backend  = var.ingress_ports_list_backend
