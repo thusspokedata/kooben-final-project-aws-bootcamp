@@ -38,3 +38,11 @@ variable "access_key" {
 variable "secret_key" {
   type = string
 }
+
+variable "ec2_specs" {
+  description = "EC2 instance specifications"
+  type = object({
+    instance_type = string
+    ami           = string
+  })
+}
