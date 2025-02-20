@@ -1,6 +1,3 @@
-
-
-
 resource "aws_security_group" "sg_backend" {
   name        = "sg_kooben-backend"
   description = "Security Group for Backend"
@@ -41,7 +38,6 @@ resource "aws_security_group" "sg_frontend" {
   }
 }
 
-
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_backend" {
   security_group_id = aws_security_group.sg_backend.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -52,4 +48,31 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_frontend" 
   security_group_id = aws_security_group.sg_frontend.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1"
+}
+
+# Database Security Group
+resource "aws_security_group" "sg_database" {
+  name        = "database-sg-${var.sufix}"
+  description = "Security group for database"
+  vpc_id      = var.vpc_id
+
+  # Allow inbound PostgreSQL traffic from backend
+  ingress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_backend.id]
+  }
+
+  # Block all outbound traffic by default
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "database-sg-${var.sufix}"
+  }
 }
