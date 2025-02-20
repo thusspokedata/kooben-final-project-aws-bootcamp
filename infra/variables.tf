@@ -62,3 +62,33 @@ variable "rds_instance_class" {
   description = "RDS instance class"
   type        = string
 }
+
+variable "jwt_secret_backend" {
+  description = "Secret key for JWT"
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudinary_api_key" {
+  description = "Cloudinary API Key"
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudinary_api_secret" {
+  description = "Cloudinary API Secret"
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudinary_url" {
+  description = "Cloudinary URL"
+  type        = string
+  sensitive   = true
+}
+
+variable "clerk_secret_key" {
+  description = "Clerk Secret Key"
+  type        = string
+  sensitive   = true
+}

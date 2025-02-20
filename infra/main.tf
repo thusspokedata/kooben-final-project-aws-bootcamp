@@ -25,7 +25,31 @@ module "myBucket" {
   source      = "./modules/S3"
   bucket_name = local.s3_sufix
   environment_variables = {
+    # Database configuration
     DATABASE_URL = "postgresql://${module.database.username}:${var.db_password}@${module.database.endpoint}:${module.database.port}/${module.database.database_name}"
+    DB_PASSWORD  = var.db_password
+    DB_NAME      = module.database.database_name
+    DB_HOST      = module.database.endpoint
+    DB_PORT      = module.database.port
+    DB_USERNAME  = module.database.username
+    
+    # Application configuration
+    APP_VERSION  = "1.2.0"
+    STAGE        = "dev"
+    PORT         = "3000"
+    HOST_API     = "http://localhost:3000/api"
+    
+    # Security
+    JWT_SECRET   = var.jwt_secret_backend
+    
+    # Cloudinary configuration
+    CLOUDINARY_CLOUD_NAME = "thusspokedata"
+    CLOUDINARY_API_KEY    = var.cloudinary_api_key
+    CLOUDINARY_API_SECRET = var.cloudinary_api_secret
+    CLOUDINARY_URL        = var.cloudinary_url
+    
+    # Clerk configuration
+    CLERK_SECRET_KEY      = var.clerk_secret_key
   }
 }
 

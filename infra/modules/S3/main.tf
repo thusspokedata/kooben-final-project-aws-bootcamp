@@ -65,7 +65,7 @@ resource "aws_kms_key" "secrets_encryption_key" {
 # Create a secret in AWS Secrets Manager for sensitive environment variables
 resource "aws_secretsmanager_secret" "app_env" {
   name       = "app-env-${var.bucket_name}"
-  kms_key_id = aws_kms_key.secrets_encryption_key.arn # Usar nuestra propia clave KMS
+  kms_key_id = aws_kms_key.secrets_encryption_key.arn
 }
 
 resource "aws_secretsmanager_secret_version" "app_env" {

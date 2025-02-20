@@ -8,33 +8,57 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 ## **🛠 Project Structure**
 ```
 .
-├── infra/                 # Terraform infrastructure files
-│   ├── main.tf            # Main entry point for Terraform
-│   ├── vpc.tf             # VPC and Subnets
-│   ├── internet_gateway.tf # Internet Gateway & NAT Gateway
-│   ├── route_tables.tf     # Route tables and associations
-│   ├── providers.tf        # Terraform provider configurations
-│   ├── variables.tf        # Variable definitions
-│   ├── terraform.tfvars    # Environment-specific variables (not committed)
-│   ├── modules/            # Terraform modules
-│   │   ├── security_groups/ # Security Groups module
-│   │   │   ├── main.tf      # Security group definitions
-│   │   │   ├── variables.tf # Security group variables
-│   │   │   ├── outputs.tf   # Security group outputs
-│   │   ├── S3/              # S3 Bucket module
+├── infra/                      # Terraform infrastructure files
+│   ├── modules/                # Terraform modules
+│   │   ├── kms/                # KMS module for encryption
+│   │   │   ├── main.tf
+│   │   ├── launch_template/     # EC2 Launch Template module
+│   │   │   ├── main.tf
+│   │   │   ├── user_data.sh     # Script for EC2 user data
+│   │   │   ├── variables.tf
+│   │   ├── networking/          # Networking-related modules
+│   │   │   ├── modules/         # Submodules inside networking
+│   │   │   │   ├── flow_logs/   # VPC Flow Logs module
+│   │   │   │   │   ├── main.tf
+│   │   │   │   │   ├── outputs.tf
+│   │   │   │   │   ├── variables.tf
+│   │   │   │   ├── routing/     # Routing-related configurations
+│   │   │   │   │   ├── main.tf
+│   │   │   │   │   ├── variables.tf
+│   │   │   │   ├── vpc/         # VPC module
+│   │   │   │   │   ├── main.tf
+│   │   │   │   │   ├── outputs.tf
+│   │   │   │   │   ├── variables.tf
+│   │   ├── rds/                 # RDS database module
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   ├── variables.tf
+│   │   ├── S3/                  # S3 Bucket module
+│   │   ├── files/               # Files module, contains extra configurations
+│   │   │   ├── docker-compose.yml
 │   │   │   ├── main.tf
 │   │   │   ├── output.tf
 │   │   │   ├── variables.tf
-├── .gitignore             # Files ignored by Git
-├── README.md              # Project documentation
-├── documentacion/         # Project documentation folder
-│   ├── s3.md              # Documentation for S3 configuration
-│   ├── COMMANDS.md        # List of useful Terraform commands
-│   ├── tools-i-used/      # Documentation for tools used
-│   │   ├── infracost.md   # Infracost documentation
-│   │   ├── tfenv.md       # tfenv documentation
-│   │   ├── tfsec.md       # tfsec documentation
-│   │   ├── tflint.md      # tflint documentation
+│   │   ├── security_groups/      # Security Groups module
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   ├── variables.tf
+│   ├── locals.tf                # Local variables for Terraform
+│   ├── main.tf                   # Main entry point for Terraform
+│   ├── outputs.tf                # Terraform output definitions
+│   ├── providers.tf              # Terraform provider configurations
+│   ├── terraform.tfvars          # Environment-specific variables (not committed)
+│   ├── variables.tf              # Variable definitions
+├── .gitignore                    # Files ignored by Git
+├── README.md                     # Project documentation
+├── documentation/                 # Project documentation folder
+│   ├── s3.md                     # Documentation for S3 configuration
+│   ├── COMMANDS.md                # List of useful Terraform commands
+│   ├── tools-i-used/              # Documentation for tools used
+│   │   ├── infracost.md           # Infracost documentation
+│   │   ├── tfenv.md               # tfenv documentation
+│   │   ├── tfsec.md               # tfsec documentation
+│   │   ├── tflint.md              # tflint documentation
 ```
 
 ---
@@ -86,4 +110,3 @@ tfsec                               # Perform security analysis on Terraform con
 - Create Auto Scaling Group for dynamic scaling
 - Configure Launch Templates for backend and frontend instances
 - Deploy an Application Load Balancer (ALB)
-
