@@ -4,6 +4,9 @@ resource "aws_launch_template" "backend_template" {
   image_id      = var.ec2_specs.ami
   instance_type = var.ec2_specs.instance_type
 
+  # Establish the latest version of the launch template
+  update_default_version = true
+
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = [var.backend_security_group_id]
