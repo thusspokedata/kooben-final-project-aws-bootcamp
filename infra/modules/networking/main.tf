@@ -5,11 +5,11 @@ data "aws_region" "current" {}
 module "vpc" {
   source = "./modules/vpc"
 
-  vpc_cidr            = var.vpc_cidr
-  public_subnet_cidr  = var.public_subnet_cidr
+  vpc_cidr           = var.vpc_cidr
+  public_subnet_cidr = var.public_subnet_cidr
   private_subnet_cidr = var.private_subnet_cidr
-  sufix              = var.sufix
-  tags               = var.tags
+  sufix             = var.sufix
+  tags              = var.tags
 }
 
 module "routing" {
