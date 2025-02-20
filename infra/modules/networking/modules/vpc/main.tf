@@ -52,14 +52,14 @@ resource "aws_kms_key" "cloudwatch_log_key" {
 
 # CloudWatch Log Group for VPC Flow Logs
 resource "aws_cloudwatch_log_group" "flow_log" {
-  name              = "/aws/vpc/flow-logs-${var.sufix}"
+  name              = "/aws/vpc/flow-logs-${var.tags.project}-${var.tags.region}-${var.random_suffix.id}"
   retention_in_days = 7
   kms_key_id        = aws_kms_key.cloudwatch_log_key.arn
 }
 
 # IAM Role for VPC Flow Logs
 resource "aws_iam_role" "vpc_flow_log_role" {
-  name = "vpc-flow-log-role-${var.sufix}"
+  name = "vpc-flow-log-role-${var.tags.project}-${var.tags.region}-${var.random_suffix.id}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -75,7 +75,7 @@ resource "aws_iam_role" "vpc_flow_log_role" {
 
 # IAM Role Policy for VPC Flow Logs
 resource "aws_iam_role_policy" "vpc_flow_log_policy" {
-  name = "vpc-flow-log-policy-${var.sufix}"
+  name = "vpc-flow-log-policy-${var.tags.project}-${var.tags.region}-${var.random_suffix.id}"
   role = aws_iam_role.vpc_flow_log_role.id
 
   policy = jsonencode({

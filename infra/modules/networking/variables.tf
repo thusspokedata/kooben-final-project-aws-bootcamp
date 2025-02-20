@@ -22,3 +22,8 @@ variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)
 } 
+
+variable "random_suffix" {
+  description = "Random suffix for resource naming"
+  type        = string
+}

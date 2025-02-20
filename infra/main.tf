@@ -6,6 +6,7 @@ module "networking" {
   private_subnet_cidr = var.private_subnet_cidr
   sufix               = local.sufix
   tags                = var.tags
+  random_suffix       = local.random_suffix.id
 }
 
 module "database" {
