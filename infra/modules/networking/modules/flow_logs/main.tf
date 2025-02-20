@@ -1,31 +1,6 @@
-module "vpc" {
-  source = "./modules/vpc"
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
-  vpc_cidr            = var.vpc_cidr
-  public_subnet_cidr  = var.public_subnet_cidr
-  private_subnet_cidr = var.private_subnet_cidr
-  sufix              = var.sufix
-  tags               = var.tags
-}
-
-module "routing" {
-  source = "./modules/routing"
-
-  vpc_id = module.vpc.vpc_id
-  public_subnet_id = module.vpc.public_subnet_id
-  sufix = var.sufix
-  tags  = var.tags
-}
-
-module "flow_logs" {
-  source = "./modules/flow_logs"
-
-  vpc_id = module.vpc.vpc_id
-  sufix  = var.sufix
-  tags   = var.tags
-}
-
-# Create KMS key for CloudWatch Logs encryption
 resource "aws_kms_key" "cloudwatch_log_key" {
   description             = "KMS key for CloudWatch Logs encryption"
   deletion_window_in_days = 7
@@ -62,7 +37,6 @@ resource "aws_kms_key" "cloudwatch_log_key" {
   })
 }
 
-# VPC Flow Logs Configuration
 resource "aws_cloudwatch_log_group" "flow_log" {
   name              = "/aws/vpc/flow-logs-${var.sufix}"
   retention_in_days = 7
@@ -109,18 +83,13 @@ resource "aws_iam_role_policy" "vpc_flow_log_policy" {
   })
 }
 
-# Enable VPC Flow Logs
 resource "aws_flow_log" "vpc_flow_log" {
   iam_role_arn    = aws_iam_role.vpc_flow_log_role.arn
   log_destination = aws_cloudwatch_log_group.flow_log.arn
   traffic_type    = "ALL"
-  vpc_id          = module.vpc.vpc_id
+  vpc_id          = var.vpc_id
 
   tags = merge(var.tags, {
     Name = "vpc-flow-log-${var.sufix}"
   })
-}
-
-# Add data sources at the top of the file
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {} 
+} 
