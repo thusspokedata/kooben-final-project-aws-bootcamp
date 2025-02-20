@@ -17,3 +17,8 @@ tags = {
   "project"     = "kooben"
   "region"      = "frankfurt"
 }
+
+ec2_specs = {
+  "instance_type" = "t2.micro"
+  "ami"           = "ami-07eef52105e8a2059"
+}
