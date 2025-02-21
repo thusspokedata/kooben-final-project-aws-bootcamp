@@ -5,7 +5,7 @@ resource "random_string" "random_suffix" {
 }
 
 locals {
-  sufix    = "${var.tags.project}-${var.tags.env}-${var.tags.region}"
-  s3_sufix = "${var.tags.project}-${var.tags.region}-${random_string.random_suffix.id}"
+  sufix         = "${var.tags.project}-${var.tags.env}-${var.tags.region}"
+  s3_sufix      = "${var.tags.project}-${var.tags.region}-${random_string.random_suffix.id}"
   random_suffix = random_string.random_suffix.id
 }

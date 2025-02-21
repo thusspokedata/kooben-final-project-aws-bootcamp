@@ -3,7 +3,7 @@ set -e
 
 # 1. Update packages and install Docker
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y docker.io unzip postgresql-client postgresql-client-14
+sudo apt install -y docker.io unzip postgresql-client
 
 # 2. Enable and start Docker service
 sudo systemctl enable docker

@@ -27,8 +27,8 @@ rds_instance_class = "db.t4g.micro"
 
 ec2_start_stop_schedules = {
   "schedule_dev" = {
-    "cron_stop"  = "cron(00 23 ? * * *)"  # 23:00 Berlin time
-    "cron_start" = "cron(00 06 ? * * *)"  # 06:00 Berlin time
+    "cron_stop"  = "cron(00 23 ? * * *)" # 23:00 Berlin time
+    "cron_start" = "cron(00 06 ? * * *)" # 06:00 Berlin time
     "tag_key"    = "env"
     "tag_value"  = "dev"
   }
@@ -37,8 +37,8 @@ ec2_start_stop_schedules = {
 
 rds_start_stop_schedules = {
   "rds_schedule_dev" = {
-    "cron_stop"  = "cron(15 23 ? * * *)"  # 23:15 Berlin time (15 min after EC2)
-    "cron_start" = "cron(45 05 ? * * *)"  # 05:45 Berlin time (15 min before EC2)
+    "cron_stop"  = "cron(15 23 ? * * *)" # 23:15 Berlin time (15 min after EC2)
+    "cron_start" = "cron(45 05 ? * * *)" # 05:45 Berlin time (15 min before EC2)
     "tag_key"    = "env"
     "tag_value"  = "dev"
   }

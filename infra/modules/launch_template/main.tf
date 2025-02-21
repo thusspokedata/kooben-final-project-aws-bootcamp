@@ -35,4 +35,8 @@ resource "aws_launch_template" "backend_template" {
   tags = {
     Name = "backend-template-${var.sufix}"
   }
+
+  iam_instance_profile {
+    name = var.instance_profile_name
+  }
 } 
