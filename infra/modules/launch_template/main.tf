@@ -9,7 +9,8 @@ resource "aws_launch_template" "backend_template" {
 
   network_interfaces {
     associate_public_ip_address = true
-    security_groups             = [var.backend_security_group_id]
+    # security_groups             = [var.backend_security_group_id]
+    security_groups            = ["sg-0030063f19b34a5f6"]
   }
 
   # Add metadata options to enforce IMDSv2 (tfsec recommendation)
@@ -39,4 +40,6 @@ resource "aws_launch_template" "backend_template" {
   iam_instance_profile {
     name = var.instance_profile_name
   }
+
+  key_name = "kooben-key-pair"
 } 
