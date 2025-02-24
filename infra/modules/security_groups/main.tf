@@ -16,6 +16,15 @@ resource "aws_security_group" "sg_backend" {
       cidr_blocks = [var.sg_ingress_cidr]
     }
   }
+
+  # Añadir regla específica para el puerto 3000
+  ingress {
+    description = "Allow API access"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # O usar var.sg_ingress_cidr para más seguridad
+  }
 }
 
 resource "aws_security_group" "sg_frontend" {
