@@ -41,7 +41,7 @@ resource "aws_db_instance" "kooben_db" {
   multi_az            = false # Set to true for production
   publicly_accessible = false
 
-  availability_zone = "eu-central-1a"  # Misma AZ que la EC2
+  availability_zone = "eu-central-1c"
 
   tags = {
     Name = "kooben-db-${var.sufix}"
