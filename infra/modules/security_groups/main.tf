@@ -16,15 +16,6 @@ resource "aws_security_group" "sg_backend" {
       cidr_blocks = [var.sg_ingress_cidr]
     }
   }
-
-  # Añadir regla específica para el puerto 3000
-  ingress {
-    description = "Allow API access"
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # O usar var.sg_ingress_cidr para más seguridad
-  }
 }
 
 resource "aws_security_group" "sg_frontend" {
@@ -81,6 +72,24 @@ resource "aws_security_group" "sg_database" {
     to_port     = 5432
     protocol    = "tcp"
     cidr_blocks = [var.public_subnet_cidr]
+  }
+
+  # Allow inbound PostgreSQL traffic from VPC
+  ingress {
+    description = "Allow PostgreSQL access from VPC"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  # Allow inbound PostgreSQL traffic from container subnet
+  ingress {
+    description = "Allow PostgreSQL access from container subnet"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["10.10.0.0/24"]  # Subnet donde está el contenedor
   }
 
   # Restrict outbound traffic to VPC CIDR only
