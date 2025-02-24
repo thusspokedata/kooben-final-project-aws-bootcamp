@@ -37,6 +37,17 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
           "secretsmanager:ListSecrets"
         ]
         Resource = "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:app-env-${var.s3_bucket_name}-*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "iam:ListAttachedRolePolicies",
+          "iam:GetRole",
+          "iam:GetRolePolicy"
+        ]
+        Resource = [
+          "arn:aws:iam::${local.account_id}:role/ec2-role-${var.sufix}"
+        ]
       }
     ]
   })
