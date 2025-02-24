@@ -11,7 +11,6 @@ resource "aws_launch_template" "backend_template" {
     associate_public_ip_address = true
     security_groups             = [var.backend_security_group_id]
     subnet_id                   = var.public_subnet_id
-    # security_groups            = ["sg-0030063f19b34a5f6"]
   }
 
   # Add metadata options to enforce IMDSv2 (tfsec recommendation)

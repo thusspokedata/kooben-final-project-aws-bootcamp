@@ -34,8 +34,8 @@ resource "aws_db_instance" "kooben_db" {
 
   # Backup configuration
   backup_retention_period = 7
-  backup_window           = "03:00-04:00"
-  maintenance_window      = "Mon:04:00-Mon:05:00"
+  backup_window           = "21:00-22:00"
+  maintenance_window      = "Mon:06:00-Mon:07:00"
 
   # Network configuration
   multi_az            = false # Set to true for production
