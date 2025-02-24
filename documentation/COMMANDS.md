@@ -66,3 +66,8 @@ curl http://169.254.169.254/latest/dynamic/instance-identity/document | grep reg
 sudo tail -f /var/log/cloud-init-output.log
 
 cat /var/log/cloud-init-output.log
+
+
+sudo docker logs -f koobenApp-dockereando
+
+aws rds describe-db-instances --query 'DBInstances[*].[Endpoint.Address,Endpoint.Port]'

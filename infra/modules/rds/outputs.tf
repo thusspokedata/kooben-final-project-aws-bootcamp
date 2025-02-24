@@ -1,6 +1,6 @@
 output "endpoint" {
-  description = "The connection endpoint for the RDS instance"
-  value       = aws_db_instance.kooben_db.endpoint
+  description = "The connection endpoint without port"
+  value       = replace(aws_db_instance.kooben_db.endpoint, ":5432", "")
 }
 
 output "database_name" {
