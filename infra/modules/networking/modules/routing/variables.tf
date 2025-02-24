@@ -16,4 +16,14 @@ variable "sufix" {
 variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)
+}
+
+variable "private_subnet_1_id" {
+  description = "ID of the first private subnet"
+  type        = string
+}
+
+variable "private_subnet_2_id" {
+  description = "ID of the second private subnet"
+  type        = string
 } 
