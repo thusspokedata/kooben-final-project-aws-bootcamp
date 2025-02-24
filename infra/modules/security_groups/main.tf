@@ -3,10 +3,6 @@ resource "aws_security_group" "sg_backend" {
   description = "Security Group for EC2 instances"
   vpc_id      = var.vpc_id
 
-  tags = {
-    Name = "ec2-rds-${var.sufix}"
-  }
-
   dynamic "ingress" {
     for_each = toset(var.ingress_ports_list_backend)
     content {
@@ -17,12 +13,8 @@ resource "aws_security_group" "sg_backend" {
     }
   }
 
-  # Add egress rule specifically for RDS
-  egress {
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_database.id]
+  tags = {
+    Name = "ec2-rds-${var.sufix}"
   }
 }
 
@@ -64,16 +56,26 @@ resource "aws_security_group" "sg_database" {
   description = "Security group for database"
   vpc_id      = var.vpc_id
 
-  # Solo permitir PostgreSQL desde el security group de EC2
-  ingress {
-    description     = "Allow PostgreSQL access from EC2 instances"
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_backend.id]
-  }
-
   tags = {
     Name = "rds-ec2-${var.sufix}"
   }
+}
+
+# Reglas separadas para evitar ciclos
+resource "aws_security_group_rule" "rds_ingress" {
+  type                     = "ingress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.sg_backend.id
+  security_group_id        = aws_security_group.sg_database.id
+}
+
+resource "aws_security_group_rule" "ec2_egress" {
+  type                     = "egress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.sg_database.id
+  security_group_id        = aws_security_group.sg_backend.id
 }
