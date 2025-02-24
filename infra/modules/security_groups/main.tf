@@ -1,10 +1,10 @@
 resource "aws_security_group" "sg_backend" {
-  name        = "sg_kooben-backend"
-  description = "Security Group for Backend"
+  name        = "ec2-rds-${var.sufix}"
+  description = "Security Group for EC2 instances"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "sg_backend-${var.sufix}"
+    Name = "ec2-rds-${var.sufix}"
   }
 
   dynamic "ingress" {
@@ -52,38 +52,20 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4_frontend" 
 
 # Database Security Group
 resource "aws_security_group" "sg_database" {
-  name        = "database-sg-${var.sufix}"
+  name        = "rds-ec2-${var.sufix}"
   description = "Security group for database"
   vpc_id      = var.vpc_id
 
-  # Allow inbound PostgreSQL traffic from backend
+  # Solo permitir PostgreSQL desde el security group de EC2
   ingress {
-    description     = "Allow PostgreSQL access from backend instances"
+    description     = "Allow PostgreSQL access from EC2 instances"
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
     security_groups = [aws_security_group.sg_backend.id]
   }
 
-  # Allow inbound PostgreSQL traffic from VPC
-  ingress {
-    description = "Allow PostgreSQL access from VPC"
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
-  }
-
-  # Restrict outbound traffic to VPC CIDR only
-  egress {
-    description = "Allow outbound traffic within VPC only"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = [var.vpc_cidr]
-  }
-
   tags = {
-    Name = "database-sg-${var.sufix}"
+    Name = "rds-ec2-${var.sufix}"
   }
 }
