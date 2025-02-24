@@ -6,7 +6,6 @@ services:
     platform: linux/amd64
     restart: always
     container_name: koobenApp-dockereando
-    network_mode: "host"  # Use host network mode to access AWS DNS
     env_file:
       - .env
     ports:

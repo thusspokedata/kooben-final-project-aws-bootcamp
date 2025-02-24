@@ -22,7 +22,7 @@ module "database" {
   database_password          = var.db_password
   instance_class             = var.rds_instance_class
   database_security_group_id = module.security_groups.database_security_group_id
-  private_subnet_ids         = [
+  private_subnet_ids = [
     module.networking.private_subnet_1_id,
     module.networking.private_subnet_2_id
   ]
@@ -32,13 +32,15 @@ module "myBucket" {
   source      = "./modules/S3"
   bucket_name = local.s3_sufix
   environment_variables = {
-    # Database configuration
-    DATABASE_URL = "postgresql://${module.database.username}:${var.db_password}@${module.database.endpoint}:${module.database.port}/${module.database.database_name}"
-    DB_PASSWORD  = var.db_password
-    DB_NAME      = module.database.database_name
-    DB_HOST      = module.database.endpoint
-    DB_PORT      = module.database.port
-    DB_USERNAME  = module.database.username
+    # Database configuration - Using the working configuration
+    DB_PASSWORD = var.db_password
+    DB_NAME     = module.database.database_name
+    DB_HOST     = module.database.endpoint
+    DB_PORT     = module.database.port
+    DB_USERNAME = module.database.username
+
+    # Add SSL requirement
+    PGSSLMODE = "require"
 
     # Application configuration
     APP_VERSION = "1.2.0"
@@ -80,7 +82,7 @@ module "iam" {
 }
 
 module "backend_template" {
-  source                = "./modules/launch_template"
+  source = "./modules/launch_template"
 
   ec2_specs                 = var.ec2_specs
   backend_security_group_id = module.security_groups.backend_security_group_id

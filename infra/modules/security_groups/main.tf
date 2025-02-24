@@ -71,7 +71,7 @@ resource "aws_security_group" "sg_database" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [var.vpc_cidr]  # Restrict to VPC CIDR instead of 0.0.0.0/0
+    cidr_blocks = [var.vpc_cidr] # Restrict to VPC CIDR instead of 0.0.0.0/0
   }
 
   tags = {

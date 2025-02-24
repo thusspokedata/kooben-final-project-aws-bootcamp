@@ -6,15 +6,15 @@ resource "aws_kms_key" "rds_encryption_key" {
 }
 
 # Create the RDS instance
-resource "aws_db_instance" "kooben_db" {
+resource "aws_db_instance" "database" {
   identifier        = "kooben-db-${var.sufix}"
   engine            = "postgres"
   engine_version    = "16.3"
   instance_class    = var.instance_class
   allocated_storage = 20
 
-  db_name  = var.database_name
-  username = var.database_user
+  db_name  = "koobenDB"
+  username = "koobendb"
   password = var.database_password
 
   vpc_security_group_ids = [var.database_security_group_id]
