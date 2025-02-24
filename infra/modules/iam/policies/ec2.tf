@@ -7,6 +7,18 @@ locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
+# AWS managed policies for S3 access
+resource "aws_iam_role_policy_attachment" "s3_full_access" {
+  role       = var.role_id
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "s3_read_access" {
+  role       = var.role_id
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
+
+# Custom inline policy for other permissions
 resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
   name = "ec2-s3-secrets-policy-${var.sufix}"
   role = var.role_id
@@ -17,16 +29,10 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
       {
         Effect = "Allow"
         Action = [
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:ListObjects",
-          "s3:ListObjectsV2",
           "kms:Decrypt",
           "kms:GenerateDataKey"
         ]
         Resource = [
-          "arn:aws:s3:::${var.s3_bucket_name}",
-          "arn:aws:s3:::${var.s3_bucket_name}/*",
           "arn:aws:kms:${local.region}:${local.account_id}:key/*"
         ]
       },

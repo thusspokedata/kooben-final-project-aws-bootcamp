@@ -20,14 +20,4 @@ module "policies" {
   s3_bucket_name = var.s3_bucket_name
   role_id        = module.roles.ec2_role_id
   tags           = var.tags
-}
-
-resource "aws_iam_role_policy_attachment" "s3_full_access" {
-  role       = module.roles.ec2_role_id
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-}
-
-resource "aws_iam_role_policy_attachment" "s3_read_access" {
-  role       = module.roles.ec2_role_id
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 } 
