@@ -97,4 +97,5 @@ module "ec2-rds-scheduler" {
   rds_start_stop_schedules = var.rds_start_stop_schedules
   asg_start_stop_schedules = var.asg_start_stop_schedules
   timezone                 = var.timezone
+  nat_instance_id          = module.networking.nat_instance_id
 }
