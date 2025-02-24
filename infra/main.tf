@@ -84,6 +84,7 @@ module "backend_template" {
   s3_bucket_name            = module.myBucket.s3_bucket_name
   sufix                     = local.sufix
   instance_profile_name     = module.iam.ec2_instance_profile_name
+  public_subnet_id          = module.networking.public_subnet_id
 }
 
 module "ec2-rds-scheduler" {

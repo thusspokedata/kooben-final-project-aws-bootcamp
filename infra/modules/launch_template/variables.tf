@@ -31,3 +31,8 @@ variable "instance_profile_name" {
   description = "Name of the EC2 instance profile"
   type        = string
 }
+
+variable "public_subnet_id" {
+  description = "ID of the public subnet for the EC2 instance"
+  type        = string
+}
