@@ -110,7 +110,7 @@ resource "aws_flow_log" "vpc_flow_log" {
 resource "aws_subnet" "kooben_public_subnet" {
   vpc_id     = aws_vpc.kooben_vpc.id
   cidr_block = var.public_subnet_cidr
-  availability_zone = "${data.aws_region.current.name}a"
+  availability_zone = "${data.aws_region.current.name}c"
 
   tags = merge(var.tags, {
     Name = "kooben-public-subnet-${var.sufix}"
