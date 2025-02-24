@@ -60,22 +60,3 @@ resource "aws_security_group" "sg_database" {
     Name = "rds-ec2-${var.sufix}"
   }
 }
-
-# Reglas separadas para evitar ciclos
-resource "aws_security_group_rule" "rds_ingress" {
-  type                     = "ingress"
-  from_port                = 5432
-  to_port                  = 5432
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.sg_backend.id
-  security_group_id        = aws_security_group.sg_database.id
-}
-
-resource "aws_security_group_rule" "ec2_egress" {
-  type                     = "egress"
-  from_port                = 5432
-  to_port                  = 5432
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.sg_database.id
-  security_group_id        = aws_security_group.sg_backend.id
-}
