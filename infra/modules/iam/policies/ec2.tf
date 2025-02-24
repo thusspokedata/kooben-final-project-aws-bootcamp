@@ -20,11 +20,14 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
           "s3:GetObject",
           "s3:ListBucket",
           "s3:ListObjects",
-          "s3:ListObjectsV2"
+          "s3:ListObjectsV2",
+          "kms:Decrypt",
+          "kms:GenerateDataKey"
         ]
         Resource = [
           "arn:aws:s3:::${var.s3_bucket_name}",
-          "arn:aws:s3:::${var.s3_bucket_name}/*"
+          "arn:aws:s3:::${var.s3_bucket_name}/*",
+          "arn:aws:kms:${local.region}:${local.account_id}:key/*"
         ]
       },
       {

@@ -61,3 +61,8 @@ terraform validate
 terraform fmt -recursive 
 
 curl http://169.254.169.254/latest/dynamic/instance-identity/document | grep region
+
+
+sudo tail -f /var/log/cloud-init-output.log
+
+cat /var/log/cloud-init-output.log
