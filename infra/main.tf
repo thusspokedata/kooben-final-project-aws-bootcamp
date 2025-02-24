@@ -70,6 +70,7 @@ module "security_groups" {
   source                      = "./modules/security_groups"
   vpc_id                      = module.networking.vpc_id
   vpc_cidr                    = var.kooben_cidr
+  public_subnet_cidr          = var.public_subnet_cidr
   sufix                       = local.sufix
   ingress_ports_list_backend  = var.ingress_ports_list_backend
   ingress_ports_list_frontend = var.ingress_ports_list_frontend
