@@ -65,15 +65,6 @@ resource "aws_security_group" "sg_database" {
     security_groups = [aws_security_group.sg_backend.id]
   }
 
-  # Allow inbound PostgreSQL traffic from public subnet
-  ingress {
-    description = "Allow PostgreSQL access from public subnet"
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = [var.public_subnet_cidr]
-  }
-
   # Allow inbound PostgreSQL traffic from VPC
   ingress {
     description = "Allow PostgreSQL access from VPC"
@@ -81,15 +72,6 @@ resource "aws_security_group" "sg_database" {
     to_port     = 5432
     protocol    = "tcp"
     cidr_blocks = [var.vpc_cidr]
-  }
-
-  # Allow inbound PostgreSQL traffic from container subnet
-  ingress {
-    description = "Allow PostgreSQL access from container subnet"
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["10.10.0.0/24"]  # Subnet donde está el contenedor
   }
 
   # Restrict outbound traffic to VPC CIDR only
