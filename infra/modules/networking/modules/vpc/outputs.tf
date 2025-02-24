@@ -8,10 +8,12 @@ output "public_subnet_id" {
   value       = aws_subnet.kooben_public_subnet.id
 }
 
-output "private_subnet_ids" {
-  description = "List of private subnet IDs"
-  value = [
-    aws_subnet.kooben_private_subnet_1.id,
-    aws_subnet.kooben_private_subnet_2.id
-  ]
+output "private_subnet_1_id" {
+  description = "The ID of the first private subnet"
+  value       = aws_subnet.kooben_private_subnet_1.id
+}
+
+output "private_subnet_2_id" {
+  description = "The ID of the second private subnet"
+  value       = aws_subnet.kooben_private_subnet_2.id
 } 
