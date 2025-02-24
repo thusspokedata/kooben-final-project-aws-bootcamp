@@ -24,7 +24,6 @@ variable "sg_ingress_cidr" {
 variable "ingress_ports_list_backend" {
   description = "List of ports for backend security group"
   type        = list(number)
-  default     = [22, 3000]
 }
 
 variable "ingress_ports_list_frontend" {
