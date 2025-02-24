@@ -48,6 +48,15 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
         Resource = [
           "arn:aws:iam::${local.account_id}:role/ec2-role-${var.sufix}"
         ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ec2:DetachNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "ec2:DescribeNetworkInterfaces"
+        ]
+        Resource = "*"
       }
     ]
   })
