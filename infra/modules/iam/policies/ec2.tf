@@ -18,7 +18,9 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
         Effect = "Allow"
         Action = [
           "s3:GetObject",
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:ListObjects",
+          "s3:ListObjectsV2"
         ]
         Resource = [
           "arn:aws:s3:::${var.s3_bucket_name}",
@@ -28,7 +30,8 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
       {
         Effect = "Allow"
         Action = [
-          "secretsmanager:GetSecretValue"
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:ListSecrets"
         ]
         Resource = "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:app-env-${var.s3_bucket_name}-*"
       }
