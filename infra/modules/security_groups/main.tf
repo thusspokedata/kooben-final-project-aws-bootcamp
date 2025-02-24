@@ -65,14 +65,13 @@ resource "aws_security_group" "sg_database" {
     security_groups = [aws_security_group.sg_backend.id]
   }
 
-  # Allow all outbound traffic
+  # Restrict outbound traffic to VPC CIDR only
   egress {
-    description = "Allow all outbound traffic"
+    description = "Allow outbound traffic within VPC only"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    # cidr_blocks = [var.vpc_cidr] # Restrict outbound traffic to VPC CIDR only
-    cidr_blocks = ["0.0.0.0/0"]  # Allow all outbound traffic
+    cidr_blocks = [var.vpc_cidr]  # Restrict to VPC CIDR instead of 0.0.0.0/0
   }
 
   tags = {
