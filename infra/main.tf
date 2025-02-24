@@ -32,19 +32,17 @@ module "myBucket" {
   source      = "./modules/S3"
   bucket_name = local.s3_sufix
   environment_variables = {
-    # Database configuration
+    # Database configuration - sin configuración SSL
     DB_PASSWORD = var.db_password
     DB_NAME     = module.database.database_name
     DB_HOST     = trimsuffix(module.database.endpoint, ":5432")
     DB_PORT     = module.database.port
     DB_USERNAME = module.database.username
 
-    # SSL configuration for PostgreSQL
-    TYPEORM_SSL = "true"
-    TYPEORM_DRIVER_EXTRA = "{\"ssl\": {\"rejectUnauthorized\": false}}"
-
-    # Add SSL requirement
-    PGSSLMODE = "require"
+    # Eliminar configuración SSL
+    # TYPEORM_SSL = "true"
+    # TYPEORM_DRIVER_EXTRA = "{\"ssl\": {\"rejectUnauthorized\": false}}"
+    # PGSSLMODE = "require"
 
     # Application configuration
     APP_VERSION = "1.2.0"

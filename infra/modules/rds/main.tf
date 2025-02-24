@@ -41,6 +41,8 @@ resource "aws_db_instance" "kooben_db" {
   multi_az            = false # Set to true for production
   publicly_accessible = false
 
+  availability_zone = "eu-central-1a"  # Misma AZ que la EC2
+
   tags = {
     Name = "kooben-db-${var.sufix}"
   }
@@ -53,5 +55,15 @@ resource "aws_db_subnet_group" "kooben" {
 
   tags = {
     Name = "kooben-db-subnet-group-${var.sufix}"
+  }
+}
+
+resource "aws_db_parameter_group" "force_ssl" {
+  family = "postgres16"
+  name   = "force-ssl-${var.sufix}"
+
+  parameter {
+    name  = "rds.force_ssl"
+    value = "1"
   }
 } 

@@ -70,4 +70,11 @@ cat /var/log/cloud-init-output.log
 
 sudo docker logs -f koobenApp-dockereando
 
+sudo docker exec -it koobenApp-dockereando env | grep DB_
+
 aws rds describe-db-instances --query 'DBInstances[*].[Endpoint.Address,Endpoint.Port]'
+
+
+
+sudo docker exec -it koobenApp-dockereando sh
+cat /app/src/config/database.config.ts
