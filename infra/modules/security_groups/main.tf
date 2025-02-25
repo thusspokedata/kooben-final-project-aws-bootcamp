@@ -60,3 +60,21 @@ resource "aws_security_group" "sg_database" {
     Name = "rds-ec2-${var.sufix}"
   }
 }
+
+# ALB Security Group
+resource "aws_security_group" "alb" {
+  name        = "alb-${var.sufix}"
+  description = "Security Group for ALB"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "alb-${var.sufix}"
+  }
+}
