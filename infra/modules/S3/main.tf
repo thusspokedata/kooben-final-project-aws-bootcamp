@@ -55,6 +55,13 @@ resource "aws_s3_object" "docker_compose" {
   source = "${path.module}/files/docker-compose.yml"
 }
 
+# Upload frontend docker-compose file
+resource "aws_s3_object" "docker_compose_frontend" {
+  bucket = aws_s3_bucket.kooben_storage_bucket.id
+  key    = "docker-compose-fe.yml"
+  source = "${path.module}/files/docker-compose-fe.yml"
+}
+
 # Create a KMS key for Secrets Manager encryption
 resource "aws_kms_key" "secrets_encryption_key" {
   description             = "KMS key for Secrets Manager encryption"
