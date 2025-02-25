@@ -137,4 +137,5 @@ variable "frontend_environment_variables" {
   description = "Environment variables for frontend application"
   type        = map(string)
   sensitive   = true
+  default     = {}
 }

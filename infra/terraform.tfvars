@@ -45,3 +45,13 @@ rds_start_stop_schedules = {
 }
 
 timezone = "Europe/Berlin"
+
+frontend_environment_variables = {
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = "pk_test_..."  # Will be overridden in Terraform Cloud
+  CLERK_SECRET_KEY                  = "sk_test_..."  # Will be overridden in Terraform Cloud
+  NEXT_PUBLIC_CLERK_SIGN_IN_URL     = "/sign-in"
+  NEXT_PUBLIC_CLERK_SIGN_UP_URL     = "/sign-up"
+  NODE_ENV                          = "production"
+  PORT                              = "4000"
+  NEXT_PUBLIC_API_URL               = "http://backend-alb-..."  # Will be updated automatically
+}

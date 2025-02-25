@@ -32,7 +32,7 @@ module "myBucket" {
   source      = "./modules/S3"
   bucket_name = local.s3_sufix
   environment_variables = {
-    # Database configuration - sin configuración SSL
+    # Database configuration - without SSL configuration
     DB_PASSWORD = var.db_password
     DB_NAME     = module.database.database_name
     DB_HOST     = trimsuffix(module.database.endpoint, ":5432")
