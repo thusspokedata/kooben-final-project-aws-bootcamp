@@ -1,8 +1,8 @@
 resource "aws_autoscaling_group" "backend_asg" {
   name                = "backend-asg-${var.sufix}"
-  desired_capacity    = 1
+  desired_capacity    = 0
   max_size           = 3
-  min_size           = 1
+  min_size           = 0
   target_group_arns  = [var.target_group_arn]
   vpc_zone_identifier = var.public_subnet_ids
 
