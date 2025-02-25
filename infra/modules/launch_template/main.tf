@@ -10,7 +10,7 @@ resource "aws_launch_template" "backend_template" {
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = [var.backend_security_group_id]
-    subnet_id                   = var.public_subnet_id  # Must be in the same AZ as RDS (eu-central-1a)
+    subnet_id                   = var.public_subnet_id # Must be in the same AZ as RDS (eu-central-1a)
   }
 
   # Add metadata options to enforce IMDSv2 (tfsec recommendation)

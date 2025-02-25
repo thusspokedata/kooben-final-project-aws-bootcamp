@@ -102,10 +102,10 @@ module "ec2-rds-scheduler" {
 module "alb" {
   source = "./modules/alb"
 
-  sufix                = local.sufix
-  vpc_id              = module.networking.vpc_id
+  sufix                 = local.sufix
+  vpc_id                = module.networking.vpc_id
   alb_security_group_id = module.security_groups.alb_security_group_id
-  public_subnet_ids    = [
+  public_subnet_ids = [
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
   ]
