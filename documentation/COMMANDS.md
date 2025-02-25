@@ -78,3 +78,34 @@ aws rds describe-db-instances --query 'DBInstances[*].[Endpoint.Address,Endpoint
 
 sudo docker exec -it koobenApp-dockereando sh
 cat /app/src/config/database.config.ts
+
+psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
+
+export $(grep -v '^#' .env | xargs)
+
+psql -h kooben-db-kooben-dev-frankfurt.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -W
+psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -W
+
+database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com
+
+sudo docker exec -it koobenApp-dockereando psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
+sudo docker exec -it kooben-db-kooben-dev-frankfurt.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
+
+
+# working
+psql -h kooben-db-kooben-dev-frankfurt.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
+psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -d koobenDB -W
+
+
+SHOW rds.force_ssl;
+
+SELECT datname FROM pg_database;
+
+SHOW ssl;
+
+
+// The database connection failed previously because the SSL configuration was incorrect.
+// TypeORM expects an object when SSL is enabled, but we were passing only `true`.
+// PostgreSQL requires a proper SSL configuration with `{ rejectUnauthorized: false }`
+// to allow secure connections without verifying the certificate authority.
+// By updating `ssl` to be an object instead of just `true`, the connection now works properly.
