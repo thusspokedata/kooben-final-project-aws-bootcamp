@@ -80,7 +80,7 @@ module "iam" {
 }
 
 module "backend_template" {
-  source = "./modules/launch_template"
+  source = "./modules/backend/launch_template"
 
   ec2_specs                 = var.ec2_specs
   backend_security_group_id = module.security_groups.backend_security_group_id
@@ -100,7 +100,7 @@ module "ec2-rds-scheduler" {
 }
 
 module "alb" {
-  source = "./modules/alb"
+  source = "./modules/backend/alb"
 
   sufix                 = local.sufix
   vpc_id                = module.networking.vpc_id
@@ -112,7 +112,7 @@ module "alb" {
 }
 
 module "asg" {
-  source = "./modules/asg"
+  source = "./modules/backend/asg"
 
   sufix              = local.sufix
   target_group_arn   = module.alb.target_group_arn
