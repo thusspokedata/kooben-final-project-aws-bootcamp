@@ -16,4 +16,8 @@ output "private_subnet_1_id" {
 output "private_subnet_2_id" {
   description = "The ID of the second private subnet"
   value       = aws_subnet.kooben_private_subnet_2.id
+}
+
+output "public_subnet_2_id" {
+  value = aws_subnet.kooben_public_subnet_2.id
 } 

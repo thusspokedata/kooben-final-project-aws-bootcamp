@@ -135,4 +135,14 @@ resource "aws_subnet" "kooben_private_subnet_2" {
   tags = merge(var.tags, {
     Name = "kooben-private-subnet-2-${var.sufix}"
   })
+}
+
+resource "aws_subnet" "kooben_public_subnet_2" {
+  vpc_id            = aws_vpc.kooben_vpc.id
+  cidr_block        = cidrsubnet(var.public_subnet_cidr, 1, 1)
+  availability_zone = "${data.aws_region.current.name}b"
+
+  tags = merge(var.tags, {
+    Name = "kooben-public-subnet-2-${var.sufix}"
+  })
 } 
