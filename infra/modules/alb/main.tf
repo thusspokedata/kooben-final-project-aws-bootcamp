@@ -4,6 +4,7 @@ resource "aws_lb" "backend_alb" {
   load_balancer_type = "application"
   security_groups    = [var.alb_security_group_id]
   subnets            = var.public_subnet_ids
+  drop_invalid_header_fields = true
 
   tags = {
     Name = "backend-alb-${var.sufix}"
