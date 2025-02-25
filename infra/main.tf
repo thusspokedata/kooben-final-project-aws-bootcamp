@@ -131,3 +131,14 @@ module "asg" {
   ]
   launch_template_id = module.backend_template.launch_template_id
 }
+
+module "frontend_template" {
+  source = "./modules/frontend/launch_template"
+
+  ec2_specs                 = var.ec2_specs
+  frontend_security_group_id = module.security_groups.frontend_security_group_id
+  s3_bucket_name            = module.myBucket.s3_bucket_name
+  sufix                     = local.sufix
+  instance_profile_name     = module.iam.ec2_instance_profile_name
+  docker_compose_version    = "2.20.2"
+}
