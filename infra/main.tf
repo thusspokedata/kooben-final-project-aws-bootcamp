@@ -57,6 +57,16 @@ module "myBucket" {
     # Clerk configuration
     CLERK_SECRET_KEY = var.clerk_secret_key
   }
+  frontend_environment_variables = {
+    # Frontend configuration
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = var.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+    CLERK_SECRET_KEY                  = var.CLERK_SECRET_KEY
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL     = "/sign-in"
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL     = "/sign-up"
+    NODE_ENV                          = "production"
+    PORT                              = "4000"
+    NEXT_PUBLIC_API_URL               = "http://${module.alb.alb_dns_name}/api"
+  }
 }
 
 module "security_groups" {

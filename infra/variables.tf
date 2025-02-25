@@ -93,6 +93,19 @@ variable "clerk_secret_key" {
   sensitive   = true
 }
 
+
+variable "CLERK_SECRET_KEY" {
+  description = "Clerk Secret Key"
+  type        = string
+  sensitive   = true
+}
+
+variable "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" {
+  description = "Clerk Publishable Key"
+  type        = string
+  sensitive   = true
+}
+
 ###########################################
 # Start/Stop Schedules for EC2, RDS, ASG #
 ##########################################
@@ -118,4 +131,10 @@ variable "asg_start_stop_schedules" {
 variable "timezone" {
   description = "Timezone for Schedules"
   type        = string
+}
+
+variable "frontend_environment_variables" {
+  description = "Environment variables for frontend application"
+  type        = map(string)
+  sensitive   = true
 }
