@@ -58,7 +58,6 @@ module "myBucket" {
     CLERK_SECRET_KEY = var.clerk_secret_key
   }
   frontend_environment_variables = {
-    # Frontend configuration
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = var.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
     CLERK_SECRET_KEY                  = var.CLERK_SECRET_KEY
     NEXT_PUBLIC_CLERK_SIGN_IN_URL     = "/sign-in"
