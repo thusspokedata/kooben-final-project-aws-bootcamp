@@ -56,6 +56,15 @@ resource "aws_security_group" "sg_database" {
   description = "Security group for database"
   vpc_id      = var.vpc_id
 
+  # Permitir tráfico desde las instancias EC2
+  ingress {
+    description     = "Allow PostgreSQL from EC2 instances"
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_backend.id]
+  }
+
   tags = {
     Name = "rds-ec2-${var.sufix}"
   }

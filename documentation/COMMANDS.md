@@ -35,6 +35,7 @@ infracost auth login
 
 ```bash
 infracost breakdown --path ./infra
+infracost breakdown --path ./infra --log-level=debug
 ```
 
 # Run a security scan on the Terraform configuration using tfsec
