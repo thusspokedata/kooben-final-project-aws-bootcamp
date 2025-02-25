@@ -116,6 +116,9 @@ module "asg" {
 
   sufix              = local.sufix
   target_group_arn   = module.alb.target_group_arn
-  public_subnet_ids  = [module.networking.public_subnet_id]
+  public_subnet_ids  = [
+    module.networking.public_subnet_id,
+    module.networking.public_subnet_2_id
+  ]
   launch_template_id = module.backend_template.launch_template_id
 }
