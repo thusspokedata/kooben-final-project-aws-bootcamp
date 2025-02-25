@@ -37,3 +37,4 @@ chmod 600 .env
 
 # 8. Start the containers
 docker-compose up -d --build
+

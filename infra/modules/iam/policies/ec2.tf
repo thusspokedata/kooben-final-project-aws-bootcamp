@@ -42,7 +42,10 @@ resource "aws_iam_role_policy" "ec2_s3_secrets_policy" {
           "secretsmanager:GetSecretValue",
           "secretsmanager:ListSecrets"
         ]
-        Resource = "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:app-env-${var.s3_bucket_name}-*"
+        Resource = [
+          "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:app-env-${var.s3_bucket_name}-*",
+          "arn:aws:secretsmanager:${local.region}:${local.account_id}:secret:frontend-env-${var.s3_bucket_name}-*"
+        ]
       }
     ]
   })
