@@ -79,3 +79,14 @@ resource "aws_secretsmanager_secret_version" "app_env" {
   secret_id     = aws_secretsmanager_secret.app_env.id
   secret_string = jsonencode(var.environment_variables)
 }
+
+# Create frontend secrets
+resource "aws_secretsmanager_secret" "frontend_env" {
+  name       = "frontend-env-${var.bucket_name}"
+  kms_key_id = aws_kms_key.secrets_encryption_key.arn
+}
+
+resource "aws_secretsmanager_secret_version" "frontend_env" {
+  secret_id     = aws_secretsmanager_secret.frontend_env.id
+  secret_string = jsonencode(var.frontend_environment_variables)
+}
