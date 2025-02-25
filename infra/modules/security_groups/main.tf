@@ -13,15 +13,6 @@ resource "aws_security_group" "sg_backend" {
     }
   }
 
-  # Add ingress rule for ALB
-  ingress {
-    description     = "Allow HTTP from ALB"
-    from_port       = 3000
-    to_port         = 3000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
-  }
-
   tags = {
     Name = "ec2-rds-${var.sufix}"
   }
@@ -90,6 +81,14 @@ resource "aws_security_group" "alb" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description     = "Allow traffic to backend instances"
+    from_port       = 3000
+    to_port         = 3000
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_backend.id]
   }
 
   tags = {
