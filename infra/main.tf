@@ -39,14 +39,9 @@ module "myBucket" {
     DB_PORT     = module.database.port
     DB_USERNAME = module.database.username
 
-    # Eliminar configuración SSL
-    # TYPEORM_SSL = "true"
-    # TYPEORM_DRIVER_EXTRA = "{\"ssl\": {\"rejectUnauthorized\": false}}"
-    # PGSSLMODE = "require"
-
     # Application configuration
     APP_VERSION = "1.2.0"
-    STAGE       = "dev"
+    STAGE       = "prod"
     PORT        = "3000"
     HOST_API    = "http://localhost:3000/api"
 
@@ -102,4 +97,22 @@ module "ec2-rds-scheduler" {
   rds_start_stop_schedules = var.rds_start_stop_schedules
   asg_start_stop_schedules = var.asg_start_stop_schedules
   timezone                 = var.timezone
+}
+
+module "alb" {
+  source = "./modules/alb"
+
+  sufix                = local.sufix
+  vpc_id              = module.networking.vpc_id
+  alb_security_group_id = module.security_groups.alb_security_group_id
+  public_subnet_ids    = [module.networking.public_subnet_id]
+}
+
+module "asg" {
+  source = "./modules/asg"
+
+  sufix              = local.sufix
+  target_group_arn   = module.alb.target_group_arn
+  public_subnet_ids  = [module.networking.public_subnet_id]
+  launch_template_id = module.backend_template.launch_template_id
 }
