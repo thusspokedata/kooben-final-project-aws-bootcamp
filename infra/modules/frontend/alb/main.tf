@@ -1,5 +1,5 @@
 resource "aws_lb" "frontend" {
-  name               = "frontend-alb-${var.sufix}"
+  name               = "fe-alb-${var.sufix}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.alb_security_group_id]
@@ -13,7 +13,7 @@ resource "aws_lb" "frontend" {
 }
 
 resource "aws_lb_target_group" "frontend" {
-  name     = "frontend-tg-${var.sufix}"
+  name     = "fe-tg-${var.sufix}"
   port     = 4000
   protocol = "HTTP"
   vpc_id   = var.vpc_id
