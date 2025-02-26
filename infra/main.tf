@@ -142,3 +142,27 @@ module "frontend_template" {
   instance_profile_name     = module.iam.ec2_instance_profile_name
   docker_compose_version    = "2.20.2"
 }
+
+module "frontend_alb" {
+  source = "./modules/frontend/alb"
+
+  sufix                 = local.sufix
+  vpc_id                = module.networking.vpc_id
+  alb_security_group_id = module.security_groups.frontend_security_group_id
+  public_subnet_ids = [
+    module.networking.public_subnet_id,
+    module.networking.public_subnet_2_id
+  ]
+}
+
+module "frontend_asg" {
+  source = "./modules/frontend/asg"
+
+  sufix              = local.sufix
+  target_group_arn   = module.frontend_alb.target_group_arn
+  public_subnet_ids  = [
+    module.networking.public_subnet_id,
+    module.networking.public_subnet_2_id
+  ]
+  launch_template_id = module.frontend_template.launch_template_id
+}
