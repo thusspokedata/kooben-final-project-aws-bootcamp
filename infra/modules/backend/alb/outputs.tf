@@ -3,9 +3,9 @@ output "target_group_arn" {
 }
 
 output "alb_dns_name" {
-  value = aws_lb.alb.dns_name
+  value = aws_lb.backend.dns_name
 }
 
 output "alb_zone_id" {
-  value = aws_lb.alb.zone_id
+  value = aws_lb.backend.zone_id
 } 
