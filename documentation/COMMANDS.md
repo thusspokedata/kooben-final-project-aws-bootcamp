@@ -1,109 +1,81 @@
-# ----------------------------------------
-# Terraform Version Management (tfenv)
-# ----------------------------------------
+# Kooben Project Commands Reference
 
-# Install Terraform version 1.10.5
+## Terraform Management
+### Version Management (tfenv)
 ```bash
+# Install specific Terraform version
 tfenv install 1.10.5
-```
 
-# Set Terraform to use version 1.10.5
-```bash
+# Set active Terraform version
 tfenv use 1.10.5
-```
 
-# List all available Terraform versions from the remote repository
-```bash
+# List available Terraform versions
 tfenv list-remote
-```
 
-# List all installed Terraform versions on your machine
-```bash
+# List installed Terraform versions
 tfenv list
-```
 
-# ----------------------------------------
-# Security & Cost Analysis
-# ----------------------------------------
+# Format Terraform files recursively
+terraform fmt -recursive 
 
-# Authenticate Infracost to enable cost estimation
-```bash
-infracost auth login
-```
-
-# Generate a cost breakdown for the Terraform configuration
-
-```bash
-infracost breakdown --path ./infra
-infracost breakdown --path ./infra --log-level=debug
-```
-
-# Run a security scan on the Terraform configuration using tfsec
-```bash
-tfsec
-```
-
-
-# ----------------------------------------
-# Linting & Validation
-# ----------------------------------------
-
-# Install TFLint, a Terraform linter (if not installed)
-```bash
-brew install tflint
-```
-
-# Validate the Terraform configuration files
-```bash
+# Validate Terraform configuration
 terraform validate
 ```
 
+## Security & Cost Analysis
+```bash
+# Login to Infracost for cost estimation
+infracost auth login
 
-terraform fmt -recursive 
+# Generate cost breakdown
+infracost breakdown --path ./infra
+infracost breakdown --path ./infra --log-level=debug
 
+# Run security scan
+tfsec
+```
+
+## AWS Commands
+```bash
+# Get current AWS region from EC2 metadata
 curl http://169.254.169.254/latest/dynamic/instance-identity/document | grep region
 
+# Describe RDS instances endpoints
+aws rds describe-db-instances --query 'DBInstances[*].[Endpoint.Address,Endpoint.Port]'
+```
 
-sudo tail -f /var/log/cloud-init-output.log
-
-cat /var/log/cloud-init-output.log
-
-
+## Docker Commands
+```bash
+# View container logs
 sudo docker logs -f koobenApp-dockereando
 
+# View container environment variables
 sudo docker exec -it koobenApp-dockereando env | grep DB_
 
-aws rds describe-db-instances --query 'DBInstances[*].[Endpoint.Address,Endpoint.Port]'
-
-
-
+# Access container shell
 sudo docker exec -it koobenApp-dockereando sh
-cat /app/src/config/database.config.ts
+```
 
-psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
-
-export $(grep -v '^#' .env | xargs)
-
-psql -h kooben-db-kooben-dev-frankfurt.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -W
-psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -W
-
-database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com
-
-sudo docker exec -it koobenApp-dockereando psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
-sudo docker exec -it kooben-db-kooben-dev-frankfurt.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
-
-
-# working
+## Database Management
+```bash
+# Connect to RDS database
 psql -h kooben-db-kooben-dev-frankfurt.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -U koobendb -d koobenDB -W
-psql -h database-1.cfqwsm2ayq93.eu-central-1.rds.amazonaws.com -d koobenDB -W
 
+# Useful PostgreSQL commands
+SHOW rds.force_ssl;  # Check if SSL is forced
+SHOW ssl;           # Check SSL status
+SELECT datname FROM pg_database;  # List databases
+```
 
-SHOW rds.force_ssl;
+## System & Logging
+```bash
+# View cloud-init logs
+sudo tail -f /var/log/cloud-init-output.log
+cat /var/log/cloud-init-output.log
 
-SELECT datname FROM pg_database;
-
-SHOW ssl;
-
+# Load environment variables from .env file
+export $(grep -v '^#' .env | xargs)
+```
 
 // The database connection failed previously because the SSL configuration was incorrect.
 // TypeORM expects an object when SSL is enabled, but we were passing only `true`.
