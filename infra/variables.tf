@@ -139,3 +139,8 @@ variable "frontend_environment_variables" {
   sensitive   = true
   default     = {}
 }
+
+variable "domain_name" {
+  type        = string
+  description = "Domain name for the application"
+}

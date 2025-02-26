@@ -55,3 +55,5 @@ frontend_environment_variables = {
   PORT                              = "4000"
   NEXT_PUBLIC_API_URL               = "http://backend-alb-..."  # Will be updated automatically
 }
+
+domain_name = "guitarrasargentinas.com"

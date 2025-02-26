@@ -166,3 +166,14 @@ module "frontend_asg" {
   ]
   launch_template_id = module.frontend_template.launch_template_id
 }
+
+module "route53" {
+  source = "./modules/route53"
+
+  sufix               = local.sufix
+  domain_name         = var.domain_name
+  frontend_alb_dns_name = module.frontend_alb.alb_dns_name
+  frontend_alb_zone_id = module.frontend_alb.alb_zone_id
+  backend_alb_dns_name = module.backend_alb.alb_dns_name
+  backend_alb_zone_id = module.backend_alb.alb_zone_id
+}
