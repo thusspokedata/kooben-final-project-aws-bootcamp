@@ -18,6 +18,7 @@ module "routing" {
 
   vpc_id              = module.vpc.vpc_id
   public_subnet_id    = module.vpc.public_subnet_id
+  public_subnet_2_id  = module.vpc.public_subnet_2_id
   private_subnet_1_id = module.vpc.private_subnet_1_id
   private_subnet_2_id = module.vpc.private_subnet_2_id
   sufix               = var.sufix

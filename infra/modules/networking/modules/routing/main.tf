@@ -20,7 +20,14 @@ resource "aws_route_table" "kooben_public_rt" {
   })
 }
 
+# Route table association for first public subnet
 resource "aws_route_table_association" "kooben_public_rt_assoc" {
   subnet_id      = var.public_subnet_id
+  route_table_id = aws_route_table.kooben_public_rt.id
+}
+
+# Route table association for second public subnet
+resource "aws_route_table_association" "kooben_public_rt_assoc_2" {
+  subnet_id      = var.public_subnet_2_id
   route_table_id = aws_route_table.kooben_public_rt.id
 } 

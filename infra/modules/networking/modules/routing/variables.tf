@@ -4,7 +4,22 @@ variable "vpc_id" {
 }
 
 variable "public_subnet_id" {
-  description = "ID of the public subnet"
+  description = "ID of the first public subnet"
+  type        = string
+}
+
+variable "public_subnet_2_id" {
+  description = "ID of the second public subnet"
+  type        = string
+}
+
+variable "private_subnet_1_id" {
+  description = "ID of the first private subnet"
+  type        = string
+}
+
+variable "private_subnet_2_id" {
+  description = "ID of the second private subnet"
   type        = string
 }
 
@@ -16,14 +31,4 @@ variable "sufix" {
 variable "tags" {
   description = "Tags to apply to resources"
   type        = map(string)
-}
-
-variable "private_subnet_1_id" {
-  description = "ID of the first private subnet"
-  type        = string
-}
-
-variable "private_subnet_2_id" {
-  description = "ID of the second private subnet"
-  type        = string
 } 
