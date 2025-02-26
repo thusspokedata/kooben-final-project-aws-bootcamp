@@ -64,7 +64,7 @@ module "myBucket" {
     NEXT_PUBLIC_CLERK_SIGN_UP_URL     = "/sign-up"
     NODE_ENV                          = "production"
     PORT                              = "4000"
-    NEXT_PUBLIC_API_URL               = "http://${module.alb.alb_dns_name}/api"
+    NEXT_PUBLIC_API_URL               = "http://api.${var.domain_name}/api"
   }
 }
 
