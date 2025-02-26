@@ -144,3 +144,9 @@ variable "domain_name" {
   type        = string
   description = "Domain name for the application"
 }
+
+variable "notification_email" {
+  description = "Email address to receive ASG notifications"
+  type        = string
+  default     = ""
+}

@@ -17,3 +17,9 @@ variable "launch_template_id" {
   type        = string
   description = "ID of the launch template"
 }
+
+variable "sns_topic_arn" {
+  description = "The ARN of the SNS topic for ASG notifications"
+  type        = string
+  default     = ""
+}

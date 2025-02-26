@@ -57,3 +57,5 @@ frontend_environment_variables = {
 }
 
 domain_name = "guitarrasargentinas.com"
+
+notification_email = "kilo@disroot.org"

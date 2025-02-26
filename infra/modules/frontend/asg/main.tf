@@ -17,3 +17,16 @@ resource "aws_autoscaling_group" "frontend" {
     propagate_at_launch = true
   }
 }
+
+# Add notifications if an SNS topic ARN is provided
+resource "aws_autoscaling_notification" "frontend_asg_notifications" {
+  count         = var.sns_topic_arn != "" ? 1 : 0
+  group_names   = [aws_autoscaling_group.frontend.name]
+  notifications = [
+    "autoscaling:EC2_INSTANCE_LAUNCH",
+    "autoscaling:EC2_INSTANCE_TERMINATE",
+    "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+    "autoscaling:EC2_INSTANCE_TERMINATE_ERROR"
+  ]
+  topic_arn     = var.sns_topic_arn
+}

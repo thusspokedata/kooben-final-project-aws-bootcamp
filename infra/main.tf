@@ -120,6 +120,13 @@ module "alb" {
   ]
 }
 
+module "sns" {
+  source            = "./modules/sns"
+  sufix             = local.sufix
+  notification_email = var.notification_email
+  tags              = var.tags
+}
+
 module "asg" {
   source = "./modules/backend/asg"
 
@@ -130,6 +137,7 @@ module "asg" {
     module.networking.public_subnet_2_id
   ]
   launch_template_id = module.backend_template.launch_template_id
+  sns_topic_arn      = module.sns.topic_arn
 }
 
 module "frontend_template" {
@@ -165,6 +173,7 @@ module "frontend_asg" {
     module.networking.public_subnet_2_id
   ]
   launch_template_id = module.frontend_template.launch_template_id
+  sns_topic_arn      = module.sns.topic_arn
 }
 
 module "route53" {
