@@ -7,7 +7,7 @@ output "name_servers" {
 }
 
 output "frontend_url" {
-  value = "app.${var.domain_name}"
+  value = "kooben.${var.domain_name}"
 }
 
 output "backend_url" {
