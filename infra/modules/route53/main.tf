@@ -9,7 +9,7 @@ resource "aws_route53_zone" "main" {
 # Record for Frontend ALB
 resource "aws_route53_record" "frontend" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = "app.${var.domain_name}"
+  name    = "kooben.${var.domain_name}"
   type    = "A"
 
   alias {
