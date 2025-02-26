@@ -17,5 +17,4 @@ variable "launch_template_id" {
 variable "sns_topic_arn" {
   description = "The ARN of the SNS topic for ASG notifications"
   type        = string
-  default     = ""
 } 

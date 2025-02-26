@@ -18,9 +18,8 @@ resource "aws_autoscaling_group" "backend_asg" {
   }
 }
 
-# Add notifications if an SNS topic ARN is provided
+# Add notifications for ASG events
 resource "aws_autoscaling_notification" "backend_asg_notifications" {
-  count         = var.sns_topic_arn != "" ? 1 : 0
   group_names   = [aws_autoscaling_group.backend_asg.name]
   notifications = [
     "autoscaling:EC2_INSTANCE_LAUNCH",

@@ -6,7 +6,6 @@ variable "sufix" {
 variable "notification_email" {
   description = "Email address to receive ASG notifications"
   type        = string
-  default     = ""
 }
 
 variable "tags" {

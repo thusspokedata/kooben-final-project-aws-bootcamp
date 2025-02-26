@@ -7,7 +7,6 @@ resource "aws_sns_topic" "asg_notifications" {
 }
 
 resource "aws_sns_topic_subscription" "asg_notifications_email" {
-  count     = var.notification_email != "" ? 1 : 0
   topic_arn = aws_sns_topic.asg_notifications.arn
   protocol  = "email"
   endpoint  = var.notification_email
