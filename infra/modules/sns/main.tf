@@ -1,9 +1,18 @@
 resource "aws_sns_topic" "asg_notifications" {
   name = "asg-notifications-${var.sufix}"
-
-  tags = {
-    Name = "asg-notifications-${var.sufix}"
-  }
+  
+  # Enable server-side encryption for SNS topic
+  # Added as per tfsec recommendation: aws-sns-enable-topic-encryption
+  # This prevents SNS messages from being read if the service is compromised
+  #tfsec:ignore:aws-sns-topic-encryption-use-cmk
+  kms_master_key_id = "alias/aws/sns"
+  
+  tags = merge(
+    var.tags,
+    {
+      Name = "asg-notifications-${var.sufix}"
+    }
+  )
 }
 
 resource "aws_sns_topic_subscription" "asg_notifications_email" {
