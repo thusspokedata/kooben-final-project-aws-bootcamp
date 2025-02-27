@@ -1,12 +1,15 @@
-kooben_cidr = "10.10.0.0/16"
+kooben_cidr = "10.10.0.0/24"  # Total: 256 IPs
 
-public_subnet_cidr  = "10.10.0.0/24"
-private_subnet_cidr = "10.10.1.0/24"
+# Optimized subnet allocation - each subnet has 64 IPs
+public_subnet_cidr  = "10.10.0.0/26"     # 1st public subnet (64 IPs) - AZ c
+public_subnet_2_cidr = "10.10.0.64/26"   # 2nd public subnet (64 IPs) - AZ b
+private_subnet_cidr = "10.10.0.128/26"   # 1st private subnet (64 IPs) - AZ a
+private_subnet_2_cidr = "10.10.0.192/26" # 2nd private subnet (64 IPs) - AZ b
 
 sg_ingress_cidr = "0.0.0.0/0" # Allow all traffic from the internet
 
 ingress_ports_list_backend  = [22, 80, 3000, 5432]
-ingress_ports_list_frontend = [80, 443, 22, 4000]
+ingress_ports_list_frontend = [22, 80, 443, 4000]
 
 tags = {
   "owner"       = "thusspokedata"

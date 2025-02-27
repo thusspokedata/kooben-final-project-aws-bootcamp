@@ -7,7 +7,9 @@ module "networking" {
 
   vpc_cidr            = var.kooben_cidr
   public_subnet_cidr  = var.public_subnet_cidr
+  public_subnet_2_cidr = var.public_subnet_2_cidr
   private_subnet_cidr = var.private_subnet_cidr
+  private_subnet_2_cidr = var.private_subnet_2_cidr
   sufix               = local.sufix
   tags                = var.tags
   random_suffix       = local.random_suffix

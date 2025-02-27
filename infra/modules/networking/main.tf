@@ -7,7 +7,9 @@ module "vpc" {
 
   vpc_cidr            = var.vpc_cidr
   public_subnet_cidr  = var.public_subnet_cidr
+  public_subnet_2_cidr = var.public_subnet_2_cidr
   private_subnet_cidr = var.private_subnet_cidr
+  private_subnet_2_cidr = var.private_subnet_2_cidr
   sufix               = var.sufix
   tags                = var.tags
   random_suffix       = var.random_suffix
