@@ -7,10 +7,10 @@ resource "aws_route53_zone" "domain_zone" {
   }
 }
 
-# Frontend A record
+# Frontend A record (root domain)
 resource "aws_route53_record" "frontend" {
   zone_id = aws_route53_zone.domain_zone.zone_id
-  name    = "kooben.${var.domain_name}"
+  name    = var.domain_name
   type    = "A"
 
   alias {
