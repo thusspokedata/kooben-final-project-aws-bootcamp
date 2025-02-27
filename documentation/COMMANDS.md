@@ -25,15 +25,6 @@ terraform graph | dot -Tsvg > documentation/graph.svg
 terraform validate
 ```
 
-## Infrastructure Visualization
-The project includes a visual representation of the infrastructure deployed with Terraform. This helps in understanding the relationships between resources and the overall architecture.
-
-![Infrastructure Graph](graph.svg)
-
-- **Location**: `documentation/graph.svg`
-- **How to update**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
-- **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
-
 ## Security & Cost Analysis
 ```bash
 # Login to Infracost for cost estimation

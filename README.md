@@ -11,6 +11,19 @@ This repository contains the infrastructure configuration for the **Kooben** pro
   - Improved security practices
 - Added environment variables management through AWS Secrets Manager
 - Implemented Launch Template with auto-update to latest version
+- Configured HTTPS with AWS Certificate Manager (ACM)
+- Implemented Route53 for domain management
+
+## **🏗️ Infrastructure Visualization**
+The project includes a visual representation of the infrastructure deployed with Terraform:
+
+![Infrastructure Graph](documentation/graph.svg)
+
+This diagram helps in understanding the relationships between resources and the overall architecture of the system. It shows all the AWS resources and their connections, making it easier to understand the infrastructure as a whole.
+
+- **Location**: `documentation/graph.svg`
+- **How to update**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
+- **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
 
 ---
 
@@ -19,6 +32,26 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 .
 ├── infra/                      # Terraform infrastructure files
 │   ├── modules/                # Terraform modules
+│   │   ├── alb/                # Application Load Balancer module
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   ├── variables.tf
+│   │   ├── backend/            # Backend application modules
+│   │   │   ├── asg/            # Auto Scaling Group for backend
+│   │   │   ├── launch_template/# Launch Template for backend
+│   │   ├── frontend/           # Frontend application modules
+│   │   │   ├── asg/            # Auto Scaling Group for frontend
+│   │   │   ├── launch_template/# Launch Template for frontend
+│   │   ├── iam/                # IAM configurations
+│   │   ├── networking/         # Networking-related modules
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   ├── variables.tf
+│   │   ├── rds/                # RDS database module
+│   │   ├── route53/            # Route53 DNS configurations
+│   │   ├── S3/                 # S3 Bucket module
+│   │   ├── security_groups/    # Security Groups module
+│   │   ├── sns/                # SNS notifications module
 │   │   ├── kms/                # KMS module for encryption
 │   │   │   ├── main.tf
 │   │   ├── launch_template/     # EC2 Launch Template module
@@ -38,31 +71,23 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 │   │   │   │   │   ├── main.tf
 │   │   │   │   │   ├── outputs.tf
 │   │   │   │   │   ├── variables.tf
-│   │   ├── rds/                 # RDS database module
-│   │   │   ├── main.tf
-│   │   │   ├── outputs.tf
-│   │   │   ├── variables.tf
-│   │   ├── S3/                  # S3 Bucket module
 │   │   ├── files/               # Files module, contains extra configurations
 │   │   │   ├── docker-compose.yml
 │   │   │   ├── main.tf
 │   │   │   ├── output.tf
 │   │   │   ├── variables.tf
-│   │   ├── security_groups/      # Security Groups module
-│   │   │   ├── main.tf
-│   │   │   ├── outputs.tf
-│   │   │   ├── variables.tf
 │   ├── locals.tf                # Local variables for Terraform
-│   ├── main.tf                   # Main entry point for Terraform
-│   ├── outputs.tf                # Terraform output definitions
-│   ├── providers.tf              # Terraform provider configurations
-│   ├── terraform.tfvars          # Environment-specific variables (not committed)
-│   ├── variables.tf              # Variable definitions
-├── .gitignore                    # Files ignored by Git
-├── README.md                     # Project documentation
-├── documentation/                 # Project documentation folder
-│   ├── s3.md                     # Documentation for S3 configuration
+│   ├── main.tf                 # Main entry point for Terraform
+│   ├── outputs.tf               # Terraform output definitions
+│   ├── providers.tf             # Terraform provider configurations
+│   ├── terraform.tfvars         # Environment-specific variables (not committed)
+│   ├── variables.tf             # Variable definitions
+├── .gitignore                     # Files ignored by Git
+├── README.md                      # Project documentation
+├── documentation/                  # Project documentation folder
+│   ├── s3.md                      # Documentation for S3 configuration
 │   ├── COMMANDS.md                # List of useful Terraform commands
+│   ├── graph.svg                  # Infrastructure visualization
 │   ├── tools-i-used/              # Documentation for tools used
 │   │   ├── infracost.md           # Infracost documentation
 │   │   ├── tfenv.md               # tfenv documentation
@@ -114,10 +139,11 @@ tfsec                               # Perform security analysis on Terraform con
 ## **📌 Next Steps**
 - Configure Launch Templates for backend instance ✅
 - Implement cost optimization through scheduling ✅
-- Deploy new services (e.g., EC2-backend, EC2-frontend, RDS)
+- Deploy new services (EC2-backend, EC2-frontend, RDS) ✅
+- Integrate Route 53 for domain management ✅
+- Create Auto Scaling Group for dynamic scaling ✅
+- Configure Launch Templates for frontend instance ✅
+- Deploy an Application Load Balancer (ALB) ✅
+- Implement HTTPS with AWS Certificate Manager ✅
 - Implement monitoring (CloudWatch, CloudTrail)
 - Automate CI/CD for Terraform deployments
-- Integrate Route 53 for domain management
-- Create Auto Scaling Group for dynamic scaling
-- Configure Launch Templates for frontend instance
-- Deploy an Application Load Balancer (ALB)
