@@ -27,4 +27,10 @@ variable "create_acm_certificate" {
   description = "Whether to create an ACM certificate"
   type        = bool
   default     = true
+}
+
+variable "validate_certificate" {
+  description = "Whether to validate the certificate with Route53 (requires an existing hosted zone)"
+  type        = bool
+  default     = false
 } 

@@ -124,6 +124,7 @@ module "alb" {
   ]
   domain_name           = var.domain_name
   create_acm_certificate = true
+  validate_certificate  = false
 }
 
 module "sns" {

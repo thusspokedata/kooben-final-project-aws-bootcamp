@@ -33,10 +33,21 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
+# Optional Route53 validation - only if var.validate_certificate is true
+locals {
+  domain_validation_options = var.create_acm_certificate && var.validate_certificate ? aws_acm_certificate.cert[0].domain_validation_options : []
+}
+
+# Get Route53 zone data only if we're validating the certificate
+data "aws_route53_zone" "domain" {
+  count = var.create_acm_certificate && var.validate_certificate ? 1 : 0
+  name  = var.domain_name
+}
+
 # Route53 record for domain validation
 resource "aws_route53_record" "cert_validation" {
-  for_each = var.create_acm_certificate ? {
-    for dvo in aws_acm_certificate.cert[0].domain_validation_options : dvo.domain_name => {
+  for_each = var.create_acm_certificate && var.validate_certificate ? {
+    for dvo in local.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -48,18 +59,12 @@ resource "aws_route53_record" "cert_validation" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.domain[0].zone_id
-}
-
-# Get Route53 zone data
-data "aws_route53_zone" "domain" {
-  count = var.create_acm_certificate ? 1 : 0
-  name  = var.domain_name
+  zone_id         = var.validate_certificate ? data.aws_route53_zone.domain[0].zone_id : ""
 }
 
 # Certificate validation
 resource "aws_acm_certificate_validation" "cert" {
-  count = var.create_acm_certificate ? 1 : 0
+  count = var.create_acm_certificate && var.validate_certificate ? 1 : 0
   
   certificate_arn         = aws_acm_certificate.cert[0].arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
