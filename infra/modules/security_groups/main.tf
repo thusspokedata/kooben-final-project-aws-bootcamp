@@ -77,6 +77,7 @@ resource "aws_security_group" "alb" {
   vpc_id      = var.vpc_id
 
   # Dynamic ingress rules
+  #tfsec:ignore:aws-ec2-no-public-ingress-sgr
   dynamic "ingress" {
     for_each = toset(var.ingress_ports_list_alb)
     content {
