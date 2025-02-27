@@ -18,11 +18,21 @@ tfenv list
 # Format Terraform files recursively
 terraform fmt -recursive 
 
-terraform graph | dot -Tsvg> graph.svg
+# Generate infrastructure visualization graph
+terraform graph | dot -Tsvg > documentation/graph.svg
 
 # Validate Terraform configuration
 terraform validate
 ```
+
+## Infrastructure Visualization
+The project includes a visual representation of the infrastructure deployed with Terraform. This helps in understanding the relationships between resources and the overall architecture.
+
+![Infrastructure Graph](graph.svg)
+
+- **Location**: `documentation/graph.svg`
+- **How to update**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
+- **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
 
 ## Security & Cost Analysis
 ```bash
