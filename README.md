@@ -15,14 +15,22 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 - Implemented Route53 for domain management
 
 ## **🏗️ Infrastructure Visualization**
-The project includes a visual representation of the infrastructure deployed with Terraform:
+The project includes visual representations of the infrastructure deployed with Terraform:
 
+### Detailed Architecture Diagram
+![Cloud Architecture](documentation/Cloud-Architecture.png)
+
+This detailed diagram shows the AWS architecture with a clear representation of the different availability zones, subnets, and services used in the project. It provides a comprehensive view of how the components interact within the AWS Cloud.
+
+### Terraform Resource Graph
 ![Infrastructure Graph](documentation/graph.svg)
 
-This diagram helps in understanding the relationships between resources and the overall architecture of the system. It shows all the AWS resources and their connections, making it easier to understand the infrastructure as a whole.
+This automatically generated diagram shows the relationships between Terraform resources and the overall architecture of the system. It represents all the AWS resources and their connections as defined in the Terraform code.
 
-- **Location**: `documentation/graph.svg`
-- **How to update**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
+- **Locations**: 
+  - Cloud Architecture: `documentation/Cloud-Architecture.png`
+  - Terraform Graph: `documentation/graph.svg`
+- **How to update the graph**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
 - **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
 
 ---
