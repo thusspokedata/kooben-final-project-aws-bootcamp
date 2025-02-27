@@ -1,10 +1,10 @@
 resource "aws_lb" "alb" {
-  name               = "alb-${var.sufix}"
+  name = "alb-${var.sufix}"
   #tfsec:ignore:aws-elb-alb-not-public
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [var.alb_security_group_id]
-  subnets            = var.public_subnet_ids
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [var.alb_security_group_id]
+  subnets                    = var.public_subnet_ids
   drop_invalid_header_fields = true
 
   enable_deletion_protection = false
@@ -17,18 +17,18 @@ resource "aws_lb" "alb" {
 # ACM Certificate for HTTPS
 resource "aws_acm_certificate" "cert" {
   count = var.create_acm_certificate ? 1 : 0
-  
+
   domain_name       = var.domain_name
   validation_method = "DNS"
-  
+
   subject_alternative_names = [
     "*.${var.domain_name}"
   ]
-  
+
   lifecycle {
     create_before_destroy = true
   }
-  
+
   tags = {
     Name = "acm-cert-${var.sufix}"
   }
@@ -66,7 +66,7 @@ resource "aws_route53_record" "cert_validation" {
 # Certificate validation
 resource "aws_acm_certificate_validation" "cert" {
   count = var.create_acm_certificate && var.validate_certificate ? 1 : 0
-  
+
   certificate_arn         = aws_acm_certificate.cert[0].arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
@@ -82,11 +82,11 @@ resource "aws_lb_target_group" "frontend" {
     enabled             = true
     healthy_threshold   = 2
     interval            = 30
-    matcher            = "200"
-    path               = "/"
-    port               = "traffic-port"
-    protocol           = "HTTP"
-    timeout            = 5
+    matcher             = "200"
+    path                = "/"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = 5
     unhealthy_threshold = 2
   }
 }
@@ -113,7 +113,7 @@ resource "aws_lb_listener" "http" {
 
   default_action {
     type = "redirect"
-    
+
     redirect {
       port        = "443"
       protocol    = "HTTPS"

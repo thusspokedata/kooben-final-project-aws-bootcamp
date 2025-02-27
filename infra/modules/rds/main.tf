@@ -21,8 +21,8 @@ resource "aws_db_instance" "kooben_db" {
   db_subnet_group_name   = aws_db_subnet_group.kooben.name
 
   # Enhanced security (tfsec recommendations)
-  storage_encrypted                   = true
-  kms_key_id                          = aws_kms_key.rds_encryption_key.arn
+  storage_encrypted = true
+  kms_key_id        = aws_kms_key.rds_encryption_key.arn
   #tfsec:ignore:aws-rds-enable-deletion-protection
   deletion_protection                 = false # it it just false for learning porpuses set to true for production
   iam_database_authentication_enabled = true

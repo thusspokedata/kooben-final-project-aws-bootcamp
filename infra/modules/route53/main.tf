@@ -1,7 +1,7 @@
 # Create the Route53 zone if it doesn't exist
 resource "aws_route53_zone" "domain_zone" {
   name = var.domain_name
-  
+
   tags = {
     Name = "hosted-zone-${var.sufix}"
   }

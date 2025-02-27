@@ -8,7 +8,7 @@ resource "aws_launch_template" "frontend_template" {
 
   network_interfaces {
     associate_public_ip_address = true
-    security_groups            = [var.frontend_security_group_id]
+    security_groups             = [var.frontend_security_group_id]
   }
 
   metadata_options {

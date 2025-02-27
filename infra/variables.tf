@@ -172,7 +172,7 @@ variable "ingress_ports_list_alb" {
 variable "egress_ports_map_alb" {
   description = "Map of egress ports to security groups for ALB"
   type        = map(string)
-  default     = {
+  default = {
     "3000" = "backend"
     "4000" = "frontend"
   }

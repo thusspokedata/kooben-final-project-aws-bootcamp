@@ -5,14 +5,14 @@ data "aws_region" "current" {}
 module "networking" {
   source = "./modules/networking"
 
-  vpc_cidr            = var.kooben_cidr
-  public_subnet_cidr  = var.public_subnet_cidr
-  public_subnet_2_cidr = var.public_subnet_2_cidr
-  private_subnet_cidr = var.private_subnet_cidr
+  vpc_cidr              = var.kooben_cidr
+  public_subnet_cidr    = var.public_subnet_cidr
+  public_subnet_2_cidr  = var.public_subnet_2_cidr
+  private_subnet_cidr   = var.private_subnet_cidr
   private_subnet_2_cidr = var.private_subnet_2_cidr
-  sufix               = local.sufix
-  tags                = var.tags
-  random_suffix       = local.random_suffix
+  sufix                 = local.sufix
+  tags                  = var.tags
+  random_suffix         = local.random_suffix
 }
 
 module "database" {
@@ -122,24 +122,24 @@ module "alb" {
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
   ]
-  domain_name           = var.domain_name
+  domain_name            = var.domain_name
   create_acm_certificate = true
-  validate_certificate  = false
+  validate_certificate   = false
 }
 
 module "sns" {
-  source            = "./modules/sns"
-  sufix             = local.sufix
+  source             = "./modules/sns"
+  sufix              = local.sufix
   notification_email = var.notification_email
-  tags              = var.tags
+  tags               = var.tags
 }
 
 module "asg" {
   source = "./modules/backend/asg"
 
-  sufix              = local.sufix
-  target_group_arn   = module.alb.backend_target_group_arn
-  public_subnet_ids  = [
+  sufix            = local.sufix
+  target_group_arn = module.alb.backend_target_group_arn
+  public_subnet_ids = [
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
   ]
@@ -150,20 +150,20 @@ module "asg" {
 module "frontend_template" {
   source = "./modules/frontend/launch_template"
 
-  ec2_specs                 = var.ec2_specs
+  ec2_specs                  = var.ec2_specs
   frontend_security_group_id = module.security_groups.frontend_security_group_id
-  s3_bucket_name            = module.myBucket.s3_bucket_name
-  sufix                     = local.sufix
-  instance_profile_name     = module.iam.ec2_instance_profile_name
-  docker_compose_version    = "2.20.2"
+  s3_bucket_name             = module.myBucket.s3_bucket_name
+  sufix                      = local.sufix
+  instance_profile_name      = module.iam.ec2_instance_profile_name
+  docker_compose_version     = "2.20.2"
 }
 
 module "frontend_asg" {
   source = "./modules/frontend/asg"
 
-  sufix              = local.sufix
-  target_group_arn   = module.alb.frontend_target_group_arn
-  public_subnet_ids  = [
+  sufix            = local.sufix
+  target_group_arn = module.alb.frontend_target_group_arn
+  public_subnet_ids = [
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
   ]
@@ -174,10 +174,10 @@ module "frontend_asg" {
 module "route53" {
   source = "./modules/route53"
 
-  sufix               = local.sufix
-  domain_name         = var.domain_name
+  sufix                 = local.sufix
+  domain_name           = var.domain_name
   frontend_alb_dns_name = module.alb.alb_dns_name
-  frontend_alb_zone_id = module.alb.alb_zone_id
-  backend_alb_dns_name = module.alb.alb_dns_name
-  backend_alb_zone_id = module.alb.alb_zone_id
+  frontend_alb_zone_id  = module.alb.alb_zone_id
+  backend_alb_dns_name  = module.alb.alb_dns_name
+  backend_alb_zone_id   = module.alb.alb_zone_id
 }
