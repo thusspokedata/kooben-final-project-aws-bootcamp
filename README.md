@@ -1,18 +1,30 @@
 # **Kooben AWS Infrastructure - Terraform Deployment**
 
 ## **📌 Overview**
-This repository contains the infrastructure configuration for the **Kooben** project using **Terraform**. It is designed to deploy an AWS-based architecture, including a **VPC, subnets, security groups, and an S3 bucket**.
+This repository contains the infrastructure configuration for the **Kooben** project using **Terraform**. It is designed to deploy a complete AWS-based architecture for a carpentry business application, consisting of:
 
-## **🔰 Recent Updates**
-- Added EC2 and RDS scheduler for cost optimization (23:00-06:00 Berlin time)
-- Created fork of ec2-rds-scheduler module to fix security warnings:
-  - Restricted IAM policies
-  - Enabled Lambda tracing
-  - Improved security practices
-- Added environment variables management through AWS Secrets Manager
-- Implemented Launch Template with auto-update to latest version
-- Configured HTTPS with AWS Certificate Manager (ACM)
-- Implemented Route53 for domain management
+- **Backend**: Built with NestJS, containerized with Docker
+- **Frontend**: Built with NextJS, containerized with Docker
+- **Complete Infrastructure**: VPC, subnets, security groups, load balancers, auto-scaling groups, RDS, and more
+
+**Related Repositories (Work in Progress):**
+- **Frontend Repository**: [kooben-fe](https://github.com/thusspokedata/kooben-fe) - NextJS e-commerce application (WIP)
+- **Backend Repository**: [kooben-be](https://github.com/thusspokedata/kooben-be) - NestJS API for the application (WIP)
+
+The key philosophy behind this project is **Infrastructure as Code (IaC)** with approximately 98% of the infrastructure created and managed through Terraform and Terraform Cloud, minimizing the need for AWS Console interaction. Docker images are pulled directly from Docker Hub when EC2 instances are provisioned, using a bash script embedded in the Launch Template.
+
+
+## **🧠 Project Philosophy**
+The core principles guiding this project:
+
+1. **Complete Terraform Automation**: Minimize AWS Console interaction, ensuring reproducible deployments
+2. **Modular Design**: Well-structured code divided into logical modules for maintainability
+3. **Security First**: Utilizing tools like tfsec to identify and address security concerns
+4. **Cost Optimization**: Implementing scheduling for non-production resources to reduce costs
+5. **Documentation**: Comprehensive documentation for future reference and learning
+6. **Continuous Improvement**: A platform for learning and evolving better design patterns
+
+The only manual interactions required with AWS were creating secret keys in AWS Secrets Manager and copying Route53 DNS records to configure in Namecheap domain settings.
 
 ## **🏗️ Infrastructure Visualization**
 The project includes visual representations of the infrastructure deployed with Terraform:
@@ -25,13 +37,26 @@ This detailed diagram shows the AWS architecture with a clear representation of 
 ### Terraform Resource Graph
 ![Infrastructure Graph](documentation/graph.svg)
 
-This automatically generated diagram shows the relationships between Terraform resources and the overall architecture of the system. It represents all the AWS resources and their connections as defined in the Terraform code.
+This automatically generated diagram shows the relationships between Terraform resources and the overall architecture of the system. It represents all the AWS resources and their connections as defined in the Terraform code. 😬 The graph might look a bit chaotic due to the complex relationships between resources, but it provides valuable insights into the infrastructure dependencies.
 
 - **Locations**: 
   - Cloud Architecture: `documentation/Cloud-Architecture.png`
   - Terraform Graph: `documentation/graph.svg`
 - **How to update the graph**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
 - **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
+
+## **🛠️ Tools and Practices**
+This project leverages several tools and best practices:
+
+- **terraform fmt**: For consistent code formatting
+- **tflint**: To catch errors and enforce best practices before applying changes
+- **tfsec**: To identify potential security issues in Terraform configurations
+- **infracost**: To estimate the monthly cost of AWS resources
+- **External modules**:
+  - Custom fork of EC2/RDS scheduler module for Auto Scaling Groups, EC2 and RDS instances ([terraform-aws-ec2-rds-scheduler](https://github.com/thusspokedata/terraform-aws-ec2-rds-scheduler)) (fixed security issues)
+  - Random module for generating unique S3 bucket names
+- **Security**: KMS for encryption, IAM for access management, VPC for network isolation
+- **Secrets Management**: AWS Secrets Manager for sensitive application configuration
 
 ---
 
@@ -155,3 +180,18 @@ tfsec                               # Perform security analysis on Terraform con
 - Implement HTTPS with AWS Certificate Manager ✅
 - Implement monitoring (CloudWatch, CloudTrail)
 - Automate CI/CD for Terraform deployments
+- Migrate from Docker Hub to Amazon ECR for container registry
+- Implement AWS native automation tools (CodePipeline, CodeBuild, CodeDeploy)
+- Explore AWS container management services (ECS/EKS) for improved orchestration
+
+---
+
+## **💭 Personal Note**
+
+I'm incredibly proud of what has been accomplished with this project. It represents countless hours of learning, troubleshooting, and refining. Working with Terraform and Terraform Cloud has been a revelation - these tools have fundamentally changed how I approach infrastructure development.
+
+The ability to create and destroy complex infrastructure within seconds, without having to manually click through the AWS Management Console, has accelerated my learning process immensely. It's empowering to describe infrastructure as code and watch it come to life through automation.
+
+This project is just the beginning. As I continue to gain experience, I plan to refine this codebase, implement more AWS-native services, and incorporate more sophisticated patterns and practices. The modular structure I've established provides a solid foundation for future improvements.
+
+Happy coding!
