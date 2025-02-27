@@ -1,5 +1,6 @@
 resource "aws_lb" "alb" {
   name               = "alb-${var.sufix}"
+  #tfsec:ignore:aws-elb-alb-not-public
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.alb_security_group_id]
