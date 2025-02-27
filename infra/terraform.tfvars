@@ -10,7 +10,7 @@ ingress_ports_list_frontend = [80, 443, 22, 4000]
 
 tags = {
   "owner"       = "thusspokedata"
-  "env"         = "dev"
+  "env"         = "prod"
   "cloud"       = "aws"
   "IAC"         = "terraform-cloud"
   "IAC_version" = "1.10.5"

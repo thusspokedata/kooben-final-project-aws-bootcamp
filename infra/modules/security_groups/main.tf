@@ -91,6 +91,14 @@ resource "aws_security_group" "alb" {
     security_groups = [aws_security_group.sg_backend.id]
   }
 
+  egress {
+    description     = "Allow traffic to frontend instances"
+    from_port       = 4000
+    to_port         = 4000
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_frontend.id]
+  }
+
   tags = {
     Name = "alb-${var.sufix}"
   }

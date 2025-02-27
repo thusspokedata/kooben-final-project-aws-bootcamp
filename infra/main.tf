@@ -109,7 +109,7 @@ module "ec2-rds-scheduler" {
 }
 
 module "alb" {
-  source = "./modules/backend/alb"
+  source = "./modules/alb"
 
   sufix                 = local.sufix
   vpc_id                = module.networking.vpc_id
@@ -118,6 +118,7 @@ module "alb" {
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
   ]
+  domain_name          = var.domain_name
 }
 
 module "sns" {
@@ -131,7 +132,7 @@ module "asg" {
   source = "./modules/backend/asg"
 
   sufix              = local.sufix
-  target_group_arn   = module.alb.target_group_arn
+  target_group_arn   = module.alb.backend_target_group_arn
   public_subnet_ids  = [
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
@@ -151,23 +152,11 @@ module "frontend_template" {
   docker_compose_version    = "2.20.2"
 }
 
-module "frontend_alb" {
-  source = "./modules/frontend/alb"
-
-  sufix                 = local.sufix
-  vpc_id                = module.networking.vpc_id
-  alb_security_group_id = module.security_groups.frontend_security_group_id
-  public_subnet_ids = [
-    module.networking.public_subnet_id,
-    module.networking.public_subnet_2_id
-  ]
-}
-
 module "frontend_asg" {
   source = "./modules/frontend/asg"
 
   sufix              = local.sufix
-  target_group_arn   = module.frontend_alb.target_group_arn
+  target_group_arn   = module.alb.frontend_target_group_arn
   public_subnet_ids  = [
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
@@ -181,8 +170,8 @@ module "route53" {
 
   sufix               = local.sufix
   domain_name         = var.domain_name
-  frontend_alb_dns_name = module.frontend_alb.alb_dns_name
-  frontend_alb_zone_id = module.frontend_alb.alb_zone_id
+  frontend_alb_dns_name = module.alb.alb_dns_name
+  frontend_alb_zone_id = module.alb.alb_zone_id
   backend_alb_dns_name = module.alb.alb_dns_name
   backend_alb_zone_id = module.alb.alb_zone_id
 }

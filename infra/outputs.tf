@@ -23,4 +23,19 @@ output "backend_security_group_id" {
 output "frontend_security_group_id" {
   description = "ID of the frontend security group"
   value       = module.security_groups.frontend_security_group_id
+}
+
+output "backend_endpoint" {
+  description = "The endpoint URL for the backend"
+  value       = "http://${module.route53.backend_domain_name}"
+}
+
+output "frontend_endpoint" {
+  description = "The endpoint URL for the frontend"
+  value       = "http://${module.route53.frontend_domain_name}"
+}
+
+output "alb_dns" {
+  description = "DNS name of the ALB"
+  value       = module.alb.alb_dns_name
 } 
