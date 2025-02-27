@@ -78,6 +78,8 @@ module "security_groups" {
   sufix                       = local.sufix
   ingress_ports_list_backend  = var.ingress_ports_list_backend
   ingress_ports_list_frontend = var.ingress_ports_list_frontend
+  ingress_ports_list_alb      = var.ingress_ports_list_alb
+  egress_ports_map_alb        = var.egress_ports_map_alb
   sg_ingress_cidr             = var.sg_ingress_cidr
 }
 
@@ -120,7 +122,8 @@ module "alb" {
     module.networking.public_subnet_id,
     module.networking.public_subnet_2_id
   ]
-  domain_name          = var.domain_name
+  domain_name           = var.domain_name
+  create_acm_certificate = true
 }
 
 module "sns" {

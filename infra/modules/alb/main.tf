@@ -13,6 +13,58 @@ resource "aws_lb" "alb" {
   }
 }
 
+# ACM Certificate for HTTPS
+resource "aws_acm_certificate" "cert" {
+  count = var.create_acm_certificate ? 1 : 0
+  
+  domain_name       = var.domain_name
+  validation_method = "DNS"
+  
+  subject_alternative_names = [
+    "*.${var.domain_name}"
+  ]
+  
+  lifecycle {
+    create_before_destroy = true
+  }
+  
+  tags = {
+    Name = "acm-cert-${var.sufix}"
+  }
+}
+
+# Route53 record for domain validation
+resource "aws_route53_record" "cert_validation" {
+  for_each = var.create_acm_certificate ? {
+    for dvo in aws_acm_certificate.cert[0].domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  } : {}
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = data.aws_route53_zone.domain[0].zone_id
+}
+
+# Get Route53 zone data
+data "aws_route53_zone" "domain" {
+  count = var.create_acm_certificate ? 1 : 0
+  name  = var.domain_name
+}
+
+# Certificate validation
+resource "aws_acm_certificate_validation" "cert" {
+  count = var.create_acm_certificate ? 1 : 0
+  
+  certificate_arn         = aws_acm_certificate.cert[0].arn
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
+}
+
 # Target group for the frontend
 resource "aws_lb_target_group" "frontend" {
   name     = "fe-tg-${var.sufix}"
@@ -47,11 +99,30 @@ resource "aws_lb_target_group" "backend" {
   }
 }
 
-# HTTP Listener that uses host-based routing
+# HTTP Listener that redirects to HTTPS
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+# HTTPS Listener for secure connections
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = var.create_acm_certificate ? aws_acm_certificate.cert[0].arn : ""
 
   # Default action routes to frontend
   default_action {
@@ -62,7 +133,7 @@ resource "aws_lb_listener" "http" {
 
 # Rule to route backend requests
 resource "aws_lb_listener_rule" "backend" {
-  listener_arn = aws_lb_listener.http.arn
+  listener_arn = aws_lb_listener.https.arn
   priority     = 100
 
   condition {
@@ -79,7 +150,7 @@ resource "aws_lb_listener_rule" "backend" {
 
 # Rule to route frontend requests
 resource "aws_lb_listener_rule" "frontend" {
-  listener_arn = aws_lb_listener.http.arn
+  listener_arn = aws_lb_listener.https.arn
   priority     = 200
 
   condition {

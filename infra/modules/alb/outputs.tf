@@ -16,4 +16,9 @@ output "frontend_target_group_arn" {
 output "backend_target_group_arn" {
   description = "ARN of the backend target group"
   value       = aws_lb_target_group.backend.arn
+}
+
+output "acm_certificate_arn" {
+  description = "ARN of the ACM certificate (if created)"
+  value       = var.create_acm_certificate ? aws_acm_certificate.cert[0].arn : ""
 } 

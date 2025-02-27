@@ -18,6 +18,21 @@ variable "ingress_ports_list_frontend" {
   type        = list(number)
 }
 
+variable "ingress_ports_list_alb" {
+  description = "List of ports for ALB ingress"
+  type        = list(number)
+  default     = [80, 443]
+}
+
+variable "egress_ports_map_alb" {
+  description = "Map of egress ports to security groups for ALB"
+  type        = map(string)
+  default     = {
+    "3000" = "backend"
+    "4000" = "frontend"
+  }
+}
+
 variable "sg_ingress_cidr" {
   description = "CIDR block for security group ingress rules"
   type        = string

@@ -10,6 +10,11 @@ sg_ingress_cidr = "0.0.0.0/0" # Allow all traffic from the internet
 
 ingress_ports_list_backend  = [22, 80, 3000, 5432]
 ingress_ports_list_frontend = [22, 80, 443, 4000]
+ingress_ports_list_alb      = [80, 443]
+egress_ports_map_alb        = {
+  "3000" = "backend"
+  "4000" = "frontend"
+}
 
 tags = {
   "owner"       = "thusspokedata"

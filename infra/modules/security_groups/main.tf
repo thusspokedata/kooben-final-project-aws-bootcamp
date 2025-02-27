@@ -76,27 +76,28 @@ resource "aws_security_group" "alb" {
   description = "Security Group for ALB"
   vpc_id      = var.vpc_id
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  # Dynamic ingress rules
+  dynamic "ingress" {
+    for_each = toset(var.ingress_ports_list_alb)
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+      description = "Allow traffic on port ${ingress.value}"
+    }
   }
 
-  egress {
-    description     = "Allow traffic to backend instances"
-    from_port       = 3000
-    to_port         = 3000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_backend.id]
-  }
-
-  egress {
-    description     = "Allow traffic to frontend instances"
-    from_port       = 4000
-    to_port         = 4000
-    protocol        = "tcp"
-    security_groups = [aws_security_group.sg_frontend.id]
+  # Dynamic egress rules
+  dynamic "egress" {
+    for_each = var.egress_ports_map_alb
+    content {
+      from_port       = egress.key
+      to_port         = egress.key
+      protocol        = "tcp"
+      security_groups = [egress.value == "backend" ? aws_security_group.sg_backend.id : aws_security_group.sg_frontend.id]
+      description     = "Allow traffic to ${egress.value} instances on port ${egress.key}"
+    }
   }
 
   tags = {

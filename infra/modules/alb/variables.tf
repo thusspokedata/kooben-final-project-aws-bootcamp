@@ -21,4 +21,10 @@ variable "public_subnet_ids" {
 variable "domain_name" {
   description = "The domain name used for the Route53 records"
   type        = string
+}
+
+variable "create_acm_certificate" {
+  description = "Whether to create an ACM certificate"
+  type        = bool
+  default     = true
 } 
