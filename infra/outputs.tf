@@ -27,12 +27,12 @@ output "frontend_security_group_id" {
 
 output "backend_endpoint" {
   description = "The endpoint URL for the backend"
-  value       = "http://${module.route53.backend_domain_name}"
+  value       = "http://${module.route53.backend_url}"
 }
 
 output "frontend_endpoint" {
   description = "The endpoint URL for the frontend"
-  value       = "http://${module.route53.frontend_domain_name}"
+  value       = "http://${module.route53.frontend_url}"
 }
 
 output "alb_dns" {
