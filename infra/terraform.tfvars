@@ -1,7 +1,7 @@
 kooben_cidr = "10.10.0.0/24" # Total: 256 IPs
 
 # Optimized subnet allocation - each subnet has 64 IPs
-public_subnet_cidr    = "10.10.0.0/26"   # 1st public subnet (64 IPs) - AZ c
+public_subnet_cidr    = "10.10.0.0/26"   # 1st public subnet (64 IPs) - AZ a
 public_subnet_2_cidr  = "10.10.0.64/26"  # 2nd public subnet (64 IPs) - AZ b
 private_subnet_cidr   = "10.10.0.128/26" # 1st private subnet (64 IPs) - AZ a
 private_subnet_2_cidr = "10.10.0.192/26" # 2nd private subnet (64 IPs) - AZ b
