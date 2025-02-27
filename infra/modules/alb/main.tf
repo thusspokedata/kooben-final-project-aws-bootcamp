@@ -1,5 +1,5 @@
-resource "aws_lb" "combined_alb" {
-  name               = "combined-alb-${var.sufix}"
+resource "aws_lb" "alb" {
+  name               = "alb-${var.sufix}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [var.alb_security_group_id]
@@ -9,7 +9,7 @@ resource "aws_lb" "combined_alb" {
   enable_deletion_protection = false
 
   tags = {
-    Name = "combined-alb-${var.sufix}"
+    Name = "alb-${var.sufix}"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_lb_target_group" "backend" {
 
 # HTTP Listener that uses host-based routing
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.combined_alb.arn
+  load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
 

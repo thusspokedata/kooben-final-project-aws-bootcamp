@@ -1,11 +1,11 @@
 output "alb_dns_name" {
-  description = "DNS name of the combined ALB"
-  value       = aws_lb.combined_alb.dns_name
+  description = "DNS name of the ALB"
+  value       = aws_lb.alb.dns_name
 }
 
 output "alb_zone_id" {
-  description = "Zone ID of the combined ALB"
-  value       = aws_lb.combined_alb.zone_id
+  description = "Zone ID of the ALB"
+  value       = aws_lb.alb.zone_id
 }
 
 output "frontend_target_group_arn" {
