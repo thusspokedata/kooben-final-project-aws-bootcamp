@@ -44,9 +44,9 @@ resource "aws_s3_bucket_policy" "cloudtrail_bucket_policy" {
   })
 }
 
-# Create internal KMS key only if external key is not provided
+# Create internal KMS key only if configured to do so
 resource "aws_kms_key" "cloudtrail_key" {
-  count = var.kms_key_id == "" ? 1 : 0
+  count = var.create_internal_kms_key && var.kms_key_id == "" ? 1 : 0
 
   description             = "KMS key for CloudTrail logs encryption"
   deletion_window_in_days = 7
@@ -116,7 +116,7 @@ resource "aws_kms_key" "cloudtrail_key" {
 
 # Create alias only if internal key is created
 resource "aws_kms_alias" "cloudtrail_key_alias" {
-  count = var.kms_key_id == "" ? 1 : 0
+  count = var.create_internal_kms_key && var.kms_key_id == "" ? 1 : 0
 
   name          = "alias/cloudtrail-kooben-${var.sufix}"
   target_key_id = aws_kms_key.cloudtrail_key[0].key_id
@@ -124,7 +124,8 @@ resource "aws_kms_alias" "cloudtrail_key_alias" {
 
 # Determine which KMS key to use (external or internal)
 locals {
-  kms_key_id = var.kms_key_id != "" ? var.kms_key_id : (var.kms_key_id == "" ? aws_kms_key.cloudtrail_key[0].arn : null)
+  use_internal_key = var.create_internal_kms_key && var.kms_key_id == ""
+  kms_key_id       = var.kms_key_id != "" ? var.kms_key_id : (local.use_internal_key ? aws_kms_key.cloudtrail_key[0].arn : null)
   cloudtrail_log_stream = "${data.aws_caller_identity.current.account_id}_CloudTrail_${data.aws_region.current.name}"
 }
 

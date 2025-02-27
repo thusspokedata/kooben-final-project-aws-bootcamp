@@ -62,4 +62,10 @@ variable "kms_key_id" {
   description = "ARN of the KMS key used for encrypting CloudTrail logs"
   type        = string
   default     = ""
+}
+
+variable "create_internal_kms_key" {
+  description = "Whether to create an internal KMS key for CloudTrail"
+  type        = bool
+  default     = true
 } 

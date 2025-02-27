@@ -213,4 +213,5 @@ module "cloudtrail" {
   
   # Use the KMS key from the KMS module
   kms_key_id = module.kms.cloudtrail_key_arn
+  create_internal_kms_key = false
 }
