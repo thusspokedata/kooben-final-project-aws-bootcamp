@@ -20,10 +20,15 @@ output "cloudtrail_cloudwatch_log_group_arn" {
 
 output "cloudtrail_kms_key_id" {
   description = "The ID of the KMS key used for CloudTrail logs encryption"
-  value       = local.kms_key_id
+  value       = var.create_internal_kms_key ? aws_kms_key.cloudtrail_key[0].key_id : var.kms_key_id
 }
 
-output "is_using_external_kms_key" {
-  description = "Whether CloudTrail is using an external KMS key"
-  value       = var.kms_key_id != ""
+output "cloudtrail_kms_key_arn" {
+  description = "The ARN of the KMS key used for CloudTrail logs encryption"
+  value       = var.create_internal_kms_key ? aws_kms_key.cloudtrail_key[0].arn : var.kms_key_id
+}
+
+output "is_using_internal_kms_key" {
+  description = "Whether CloudTrail is using an internal KMS key"
+  value       = var.create_internal_kms_key
 } 

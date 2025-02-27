@@ -61,7 +61,7 @@ variable "cloudtrail_cloudwatch_role_id" {
 variable "kms_key_id" {
   description = "ARN of the KMS key used for encrypting CloudTrail logs"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "create_internal_kms_key" {

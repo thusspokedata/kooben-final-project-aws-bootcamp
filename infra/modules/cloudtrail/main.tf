@@ -46,7 +46,7 @@ resource "aws_s3_bucket_policy" "cloudtrail_bucket_policy" {
 
 # Create internal KMS key only if configured to do so
 resource "aws_kms_key" "cloudtrail_key" {
-  count = var.create_internal_kms_key && var.kms_key_id == "" ? 1 : 0
+  count = var.create_internal_kms_key ? 1 : 0
 
   description             = "KMS key for CloudTrail logs encryption"
   deletion_window_in_days = 7
@@ -116,7 +116,7 @@ resource "aws_kms_key" "cloudtrail_key" {
 
 # Create alias only if internal key is created
 resource "aws_kms_alias" "cloudtrail_key_alias" {
-  count = var.create_internal_kms_key && var.kms_key_id == "" ? 1 : 0
+  count = var.create_internal_kms_key ? 1 : 0
 
   name          = "alias/cloudtrail-kooben-${var.sufix}"
   target_key_id = aws_kms_key.cloudtrail_key[0].key_id
@@ -124,8 +124,6 @@ resource "aws_kms_alias" "cloudtrail_key_alias" {
 
 # Determine which KMS key to use (external or internal)
 locals {
-  use_internal_key = var.create_internal_kms_key && var.kms_key_id == ""
-  kms_key_id       = var.kms_key_id != "" ? var.kms_key_id : (local.use_internal_key ? aws_kms_key.cloudtrail_key[0].arn : null)
   cloudtrail_log_stream = "${data.aws_caller_identity.current.account_id}_CloudTrail_${data.aws_region.current.name}"
 }
 
@@ -133,7 +131,7 @@ locals {
 resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
   name              = "/aws/cloudtrail/kooben-${var.sufix}"
   retention_in_days = var.cloudtrail_retention_days
-  kms_key_id        = local.kms_key_id
+  kms_key_id        = var.create_internal_kms_key ? aws_kms_key.cloudtrail_key[0].arn : var.kms_key_id
 
   tags = merge(var.tags, {
     Name = "cloudtrail-logs-${var.sufix}"
@@ -148,7 +146,7 @@ resource "aws_cloudtrail" "kooben_trail" {
   include_global_service_events = var.include_global_service_events
   is_multi_region_trail         = var.is_multi_region_trail
   enable_log_file_validation    = var.enable_log_file_validation
-  kms_key_id                    = local.kms_key_id
+  kms_key_id                    = var.create_internal_kms_key ? aws_kms_key.cloudtrail_key[0].arn : var.kms_key_id
   cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
   cloud_watch_logs_role_arn     = var.cloudtrail_cloudwatch_role_arn
 
