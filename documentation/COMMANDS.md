@@ -18,6 +18,8 @@ tfenv list
 # Format Terraform files recursively
 terraform fmt -recursive 
 
+terraform graph | dot -Tsvg> graph.svg
+
 # Validate Terraform configuration
 terraform validate
 ```
