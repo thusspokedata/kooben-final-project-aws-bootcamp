@@ -64,6 +64,6 @@ frontend_environment_variables = {
   NEXT_PUBLIC_API_URL               = "http://backend-alb-..." # Will be updated automatically
 }
 
-domain_name = "guitarrasargentinas.com"
+domain_name = "kooben.cc"
 
 notification_email = "kilo@disroot.org"
