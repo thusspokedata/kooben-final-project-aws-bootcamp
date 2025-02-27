@@ -156,6 +156,7 @@ tfsec                         # Perform security analysis on Terraform configura
 - [tfenv Documentation](../documentacion/tools-i-used/tfenv.md)
 - [tfsec Documentation](../documentacion/tools-i-used/tfsec.md)
 - [S3 Configuration Documentation](../documentacion/s3.md)
+- [Project Presentation Slides](https://docs.google.com/presentation/d/1RDNLnNYJwPCziuKn04LqG9FRlSdY0I6O5hrQIT_auRE/edit?usp=sharing)
 
 ## **📌 Next Steps**
 - Configure Launch Templates for backend instance ✅
