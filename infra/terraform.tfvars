@@ -66,4 +66,6 @@ frontend_environment_variables = {
 
 domain_name = "kooben.cc"
 
-notification_email = "kilo@disroot.org"
+# The following variables should be set in Terraform Cloud:
+# - certificate_arn (ARN of the ACM certificate)
+# - notification_email (Email address for notifications)
