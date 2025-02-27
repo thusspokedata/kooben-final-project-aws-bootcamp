@@ -10,9 +10,10 @@ module "roles" {
 }
 
 module "policies" {
-  source         = "./policies"
-  sufix          = var.sufix
-  s3_bucket_name = var.s3_bucket_name
-  role_id        = module.roles.ec2_role_id
-  tags           = var.tags
+  source             = "./policies"
+  sufix              = var.sufix
+  s3_bucket_name     = var.s3_bucket_name
+  role_id            = module.roles.ec2_role_id
+  cloudtrail_role_id = module.roles.cloudtrail_cloudwatch_role_id
+  tags               = var.tags
 } 

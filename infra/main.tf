@@ -30,6 +30,17 @@ module "database" {
   ]
 }
 
+# Include the KMS module before the modules that will use it
+module "kms" {
+  source = "./modules/kms"
+  
+  sufix                 = local.sufix
+  tags                  = var.tags
+  create_cloudtrail_key = true
+  cloudtrail_account_id = data.aws_caller_identity.current.account_id
+  cloudtrail_region     = data.aws_region.current.name
+}
+
 module "myBucket" {
   source      = "./modules/S3"
   bucket_name = local.s3_sufix
@@ -180,4 +191,26 @@ module "route53" {
   frontend_alb_zone_id  = module.alb.alb_zone_id
   backend_alb_dns_name  = module.alb.alb_dns_name
   backend_alb_zone_id   = module.alb.alb_zone_id
+}
+
+module "cloudtrail" {
+  source = "./modules/cloudtrail"
+
+  sufix                      = local.sufix
+  enable_log_file_validation = true
+  is_multi_region_trail      = true
+  cloudtrail_retention_days  = 90
+  tags                       = var.tags
+  
+  # Use the existing S3 bucket instead of creating a new one
+  existing_s3_bucket_name = module.myBucket.s3_bucket_name
+  existing_s3_bucket_id   = module.myBucket.s3_bucket_id
+  existing_s3_bucket_arn  = module.myBucket.s3_bucket_arn
+  
+  # Use the IAM role from the IAM module
+  cloudtrail_cloudwatch_role_arn = module.iam.cloudtrail_cloudwatch_role_arn
+  cloudtrail_cloudwatch_role_id  = module.iam.cloudtrail_cloudwatch_role_id
+  
+  # Use the KMS key from the KMS module
+  kms_key_id = module.kms.cloudtrail_key_arn
 }
