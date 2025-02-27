@@ -92,8 +92,8 @@ resource "aws_security_group" "alb" {
   dynamic "egress" {
     for_each = var.egress_ports_map_alb
     content {
-      from_port       = egress.key
-      to_port         = egress.key
+      from_port       = tonumber(egress.key)
+      to_port         = tonumber(egress.key)
       protocol        = "tcp"
       security_groups = [egress.value == "backend" ? aws_security_group.sg_backend.id : aws_security_group.sg_frontend.id]
       description     = "Allow traffic to ${egress.value} instances on port ${egress.key}"
