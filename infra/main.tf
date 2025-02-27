@@ -134,8 +134,9 @@ module "alb" {
     module.networking.public_subnet_2_id
   ]
   domain_name            = var.domain_name
-  create_acm_certificate = true
-  validate_certificate   = true
+  create_acm_certificate = false
+  validate_certificate   = false
+  certificate_arn        = var.certificate_arn
 }
 
 module "sns" {

@@ -157,6 +157,12 @@ variable "domain_name" {
   description = "Domain name for the application"
 }
 
+variable "certificate_arn" {
+  description = "ARN of an existing ACM certificate to use with the ALB"
+  type        = string
+  default     = ""
+}
+
 variable "notification_email" {
   description = "Email address to receive ASG notifications"
   type        = string

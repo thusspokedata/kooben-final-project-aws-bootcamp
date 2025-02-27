@@ -128,7 +128,7 @@ resource "aws_lb_listener" "https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = var.create_acm_certificate ? aws_acm_certificate.cert[0].arn : ""
+  certificate_arn   = var.certificate_arn != "" ? var.certificate_arn : (var.create_acm_certificate ? aws_acm_certificate.cert[0].arn : "")
 
   # Default action routes to frontend
   default_action {

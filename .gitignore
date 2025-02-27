@@ -11,3 +11,6 @@ terraform.tfstate.backup
 practica_secret/
 .vscode
 .env
+
+# ACM validation files
+validation.json

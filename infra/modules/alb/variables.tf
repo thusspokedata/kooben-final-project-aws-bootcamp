@@ -33,4 +33,10 @@ variable "validate_certificate" {
   description = "Whether to validate the certificate with Route53 (requires an existing hosted zone)"
   type        = bool
   default     = false
+}
+
+variable "certificate_arn" {
+  description = "ARN of an existing ACM certificate to use (if not creating a new one)"
+  type        = string
+  default     = ""
 } 
