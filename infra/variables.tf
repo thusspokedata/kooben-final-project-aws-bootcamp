@@ -118,6 +118,12 @@ variable "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" {
   sensitive   = true
 }
 
+variable "NEXT_PUBLIC_KOOBEN_API_URL" {
+  description = "Frontend API URL for Kooben"
+  type        = string
+  default     = ""
+}
+
 ###########################################
 # Start/Stop Schedules for EC2, RDS, ASG #
 ##########################################
