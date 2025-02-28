@@ -16,6 +16,13 @@ resource "aws_autoscaling_group" "frontend" {
     value               = "frontend-instance-${var.sufix}"
     propagate_at_launch = true
   }
+  
+  # Add tag for ASG itself to be used by the scheduler
+  tag {
+    key                 = "Name"
+    value               = "frontend-asg-${var.sufix}"
+    propagate_at_launch = false
+  }
 }
 
 # Add notifications for ASG events
