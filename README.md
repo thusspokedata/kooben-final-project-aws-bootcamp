@@ -179,11 +179,30 @@ tfsec                               # Perform security analysis on Terraform con
 - Configure Launch Templates for frontend instance ✅
 - Deploy an Application Load Balancer (ALB) ✅
 - Implement HTTPS with AWS Certificate Manager ✅
-- Implement monitoring (CloudWatch, CloudTrail)
+- Implement monitoring (CloudWatch, CloudTrail) ✅
+- Implement security scanning with AWS CodeGuru ✅
 - Automate CI/CD for Terraform deployments
 - Migrate from Docker Hub to Amazon ECR for container registry
 - Implement AWS native automation tools (CodePipeline, CodeBuild, CodeDeploy)
 - Explore AWS container management services (ECS/EKS) for improved orchestration
+
+---
+
+## **🔒 Security and Monitoring**
+
+### **AWS CloudTrail**
+CloudTrail has been implemented to provide comprehensive logging of all API calls made within the AWS account. This service:
+- Records all API calls made to AWS services
+- Enables security analysis, resource change tracking, and compliance auditing
+- Stores logs securely in an S3 bucket with appropriate retention policies
+- Helps identify unusual activity and potential security threats
+
+### **AWS CodeGuru Security**
+CodeGuru Security has been integrated into the CI/CD pipeline to automatically scan code for security vulnerabilities:
+- Identifies critical security issues in application code
+- Provides detailed recommendations for remediation
+- Integrated with GitHub Actions for automated scanning on each push to main
+- Generates SARIF reports that are uploaded to GitHub Security tab for easy tracking
 
 ---
 

@@ -85,3 +85,14 @@ export $(grep -v '^#' .env | xargs)
 // PostgreSQL requires a proper SSL configuration with `{ rejectUnauthorized: false }`
 // to allow secure connections without verifying the certificate authority.
 // By updating `ssl` to be an object instead of just `true`, the connection now works properly.
+
+
+aws route53 list-hosted-zones | grep kooben.cc
+
+aws acm list-certificates | grep kooben.cc
+
+aws acm list-certificates --query "CertificateSummaryList[?contains(DomainName, 'kooben.cc')]" | cat
+
+aws acm describe-certificate --certificate-arn arn:aws:acm:eu-central-1:277707121152:certificate/c1bc5641-ad91-405f-96d7-2c6bfad1836c --query "Certificate.DomainValidationOptions" | cat
+
+aws elbv2 describe-target-groups --query "TargetGroups[*].[TargetGroupName,TargetGroupArn]" --output text | cat
