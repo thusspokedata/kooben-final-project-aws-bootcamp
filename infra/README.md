@@ -30,19 +30,19 @@ The only manual interactions required with AWS were creating secret keys in AWS 
 The project includes visual representations of the infrastructure deployed with Terraform:
 
 ### Detailed Architecture Diagram
-![Cloud Architecture](../documentation/Cloud-Architecture.png)
+![Cloud Architecture](documentation/Cloud-Architecture.png)
 
 This detailed diagram shows the AWS architecture with a clear representation of the different availability zones, subnets, and services used in the project. It provides a comprehensive view of how the components interact within the AWS Cloud.
 
 ### Terraform Resource Graph
-![Infrastructure Graph](../documentation/graph.svg)
+![Infrastructure Graph](documentation/graph.svg)
 
 This automatically generated diagram shows the relationships between Terraform resources and the overall architecture of the system. It represents all the AWS resources and their connections as defined in the Terraform code. 😬 The graph might look a bit chaotic due to the complex relationships between resources, but it provides valuable insights into the infrastructure dependencies.
 
 - **Locations**: 
-  - Cloud Architecture: `../documentation/Cloud-Architecture.png`
-  - Terraform Graph: `../documentation/graph.svg`
-- **How to update the graph**: Run `terraform graph | dot -Tsvg > ../documentation/graph.svg` from this directory
+  - Cloud Architecture: `documentation/Cloud-Architecture.png`
+  - Terraform Graph: `documentation/graph.svg`
+- **How to update the graph**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
 - **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
 
 ## **🛠️ Tools and Practices**
@@ -63,57 +63,69 @@ This project leverages several tools and best practices:
 ## **🛠 Project Structure**
 ```
 .
-├── modules/                # Terraform modules
-│   ├── alb/                # Application Load Balancer module
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── variables.tf
-│   ├── backend/            # Backend application modules
-│   │   ├── asg/            # Auto Scaling Group for backend
-│   │   ├── launch_template/# Launch Template for backend
-│   ├── frontend/           # Frontend application modules
-│   │   ├── asg/            # Auto Scaling Group for frontend
-│   │   ├── launch_template/# Launch Template for frontend
-│   ├── iam/                # IAM configurations
-│   ├── networking/         # Networking-related modules
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── variables.tf
-│   ├── rds/                # RDS database module
-│   ├── route53/            # Route53 DNS configurations
-│   ├── S3/                 # S3 Bucket module
-│   ├── security_groups/    # Security Groups module
-│   ├── sns/                # SNS notifications module
-│   ├── kms/                # KMS module for encryption
-│   │   ├── main.tf
-│   ├── launch_template/     # EC2 Launch Template module
-│   │   ├── main.tf
-│   │   ├── user_data.sh     # Script for EC2 user data
-│   │   ├── variables.tf
-│   ├── networking/          # Networking-related modules
-│   │   ├── modules/         # Submodules inside networking
-│   │   │   ├── flow_logs/   # VPC Flow Logs module
-│   │   │   │   ├── main.tf
-│   │   │   │   ├── outputs.tf
-│   │   │   │   ├── variables.tf
-│   │   │   ├── routing/     # Routing-related configurations
-│   │   │   │   ├── main.tf
-│   │   │   │   ├── variables.tf
-│   │   │   ├── vpc/         # VPC module
-│   │   │   │   ├── main.tf
-│   │   │   │   ├── outputs.tf
-│   │   │   │   ├── variables.tf
-│   ├── files/               # Files module, contains extra configurations
-│   │   ├── docker-compose.yml
-│   │   ├── main.tf
-│   │   ├── output.tf
-│   │   ├── variables.tf
-├── locals.tf                # Local variables for Terraform
-├── main.tf                 # Main entry point for Terraform
-├── outputs.tf               # Terraform output definitions
-├── providers.tf             # Terraform provider configurations
-├── terraform.tfvars         # Environment-specific variables (not committed)
-├── variables.tf             # Variable definitions
+├── infra/                      # Terraform infrastructure files
+│   ├── modules/                # Terraform modules
+│   │   ├── alb/                # Application Load Balancer module
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   ├── variables.tf
+│   │   ├── backend/            # Backend application modules
+│   │   │   ├── asg/            # Auto Scaling Group for backend
+│   │   │   ├── launch_template/# Launch Template for backend
+│   │   ├── frontend/           # Frontend application modules
+│   │   │   ├── asg/            # Auto Scaling Group for frontend
+│   │   │   ├── launch_template/# Launch Template for frontend
+│   │   ├── iam/                # IAM configurations
+│   │   ├── networking/         # Networking-related modules
+│   │   │   ├── main.tf
+│   │   │   ├── outputs.tf
+│   │   │   ├── variables.tf
+│   │   ├── rds/                # RDS database module
+│   │   ├── route53/            # Route53 DNS configurations
+│   │   ├── S3/                 # S3 Bucket module
+│   │   ├── security_groups/    # Security Groups module
+│   │   ├── sns/                # SNS notifications module
+│   │   ├── kms/                # KMS module for encryption
+│   │   │   ├── main.tf
+│   │   ├── launch_template/     # EC2 Launch Template module
+│   │   │   ├── main.tf
+│   │   │   ├── user_data.sh     # Script for EC2 user data
+│   │   │   ├── variables.tf
+│   │   ├── networking/          # Networking-related modules
+│   │   │   ├── modules/         # Submodules inside networking
+│   │   │   │   ├── flow_logs/   # VPC Flow Logs module
+│   │   │   │   │   ├── main.tf
+│   │   │   │   │   ├── outputs.tf
+│   │   │   │   │   ├── variables.tf
+│   │   │   │   ├── routing/     # Routing-related configurations
+│   │   │   │   │   ├── main.tf
+│   │   │   │   │   ├── variables.tf
+│   │   │   │   ├── vpc/         # VPC module
+│   │   │   │   │   ├── main.tf
+│   │   │   │   │   ├── outputs.tf
+│   │   │   │   │   ├── variables.tf
+│   │   ├── files/               # Files module, contains extra configurations
+│   │   │   ├── docker-compose.yml
+│   │   │   ├── main.tf
+│   │   │   ├── output.tf
+│   │   │   ├── variables.tf
+│   ├── locals.tf                # Local variables for Terraform
+│   ├── main.tf                 # Main entry point for Terraform
+│   ├── outputs.tf               # Terraform output definitions
+│   ├── providers.tf             # Terraform provider configurations
+│   ├── terraform.tfvars         # Environment-specific variables (not committed)
+│   ├── variables.tf             # Variable definitions
+├── .gitignore                     # Files ignored by Git
+├── README.md                      # Project documentation
+├── documentation/                  # Project documentation folder
+│   ├── s3.md                      # Documentation for S3 configuration
+│   ├── COMMANDS.md                # List of useful Terraform commands
+│   ├── graph.svg                  # Infrastructure visualization
+│   ├── tools-i-used/              # Documentation for tools used
+│   │   ├── infracost.md           # Infracost documentation
+│   │   ├── tfenv.md               # tfenv documentation
+│   │   ├── tfsec.md               # tfsec documentation
+│   │   ├── tflint.md              # tflint documentation
 ```
 
 ---
@@ -123,10 +135,10 @@ This project leverages several tools and best practices:
 Ensure you have the following installed:
 - [Terraform](https://developer.hashicorp.com/terraform/downloads)
 - [AWS CLI](https://aws.amazon.com/cli/)
-- [tfenv](https://github.com/tfutils/tfenv) (for managing Terraform versions) ([Documentation](../documentacion/tools-i-used/tfenv.md))
-- [TFLint](https://github.com/terraform-linters/tflint) (for linting) ([Documentation](../documentacion/tools-i-used/tflint.md))
-- [Infracost](https://www.infracost.io/) (for cost estimation) ([Documentation](../documentacion/tools-i-used/infracost.md))
-- [tfsec](https://aquasecurity.github.io/tfsec/) (for security analysis) ([Documentation](../documentacion/tools-i-used/tfsec.md))
+- [tfenv](https://github.com/tfutils/tfenv) (for managing Terraform versions) ([Documentation](documentacion/tools-i-used/tfenv.md))
+- [TFLint](https://github.com/terraform-linters/tflint) (for linting) ([Documentation](documentacion/tools-i-used/tflint.md))
+- [Infracost](https://www.infracost.io/) (for cost estimation) ([Documentation](documentacion/tools-i-used/infracost.md))
+- [tfsec](https://aquasecurity.github.io/tfsec/) (for security analysis) ([Documentation](documentacion/tools-i-used/tfsec.md))
 
 ### **2️⃣ Setting Up Terraform**
 ```bash
@@ -141,9 +153,9 @@ terraform apply       # Apply changes to AWS
 
 ### **3️⃣ Running Security and Cost Analysis**
 ```bash
-infracost breakdown --path .  # Cost estimation
-tflint                        # Run Terraform Linter to check for best practices
-tfsec                         # Perform security analysis on Terraform configuration
+infracost breakdown --path ./infra  # Cost estimation
+tflint                              # Run Terraform Linter to check for best practices
+tfsec                               # Perform security analysis on Terraform configuration
 ```
 
 ---
@@ -151,11 +163,11 @@ tfsec                         # Perform security analysis on Terraform configura
 ## **🔗 Useful Links**
 - [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
 - [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
-- [Infracost Documentation](../documentacion/tools-i-used/infracost.md)
-- [TFLint Documentation](../documentacion/tools-i-used/tflint.md)
-- [tfenv Documentation](../documentacion/tools-i-used/tfenv.md)
-- [tfsec Documentation](../documentacion/tools-i-used/tfsec.md)
-- [S3 Configuration Documentation](../documentacion/s3.md)
+- [Infracost Documentation](documentacion/tools-i-used/infracost.md)
+- [TFLint Documentation](documentacion/tools-i-used/tflint.md)
+- [tfenv Documentation](documentacion/tools-i-used/tfenv.md)
+- [tfsec Documentation](documentacion/tools-i-used/tfsec.md)
+- [S3 Configuration Documentation](documentacion/s3.md)
 - [Project Presentation Slides](https://docs.google.com/presentation/d/1RDNLnNYJwPCziuKn04LqG9FRlSdY0I6O5hrQIT_auRE/edit?usp=sharing)
 
 ## **📌 Next Steps**
@@ -167,11 +179,30 @@ tfsec                         # Perform security analysis on Terraform configura
 - Configure Launch Templates for frontend instance ✅
 - Deploy an Application Load Balancer (ALB) ✅
 - Implement HTTPS with AWS Certificate Manager ✅
-- Implement monitoring (CloudWatch, CloudTrail)
+- Implement monitoring (CloudWatch, CloudTrail) ✅
+- Implement security scanning with AWS CodeGuru ✅
 - Automate CI/CD for Terraform deployments
 - Migrate from Docker Hub to Amazon ECR for container registry
 - Implement AWS native automation tools (CodePipeline, CodeBuild, CodeDeploy)
 - Explore AWS container management services (ECS/EKS) for improved orchestration
+
+---
+
+## **🔒 Security and Monitoring**
+
+### **AWS CloudTrail**
+CloudTrail has been implemented to provide comprehensive logging of all API calls made within the AWS account. This service:
+- Records all API calls made to AWS services
+- Enables security analysis, resource change tracking, and compliance auditing
+- Stores logs securely in an S3 bucket with appropriate retention policies
+- Helps identify unusual activity and potential security threats
+
+### **AWS CodeGuru Security**
+CodeGuru Security has been integrated into the CI/CD pipeline to automatically scan code for security vulnerabilities:
+- Identifies critical security issues in application code
+- Provides detailed recommendations for remediation
+- Integrated with GitHub Actions for automated scanning on each push to main
+- Generates SARIF reports that are uploaded to GitHub Security tab for easy tracking
 
 ---
 

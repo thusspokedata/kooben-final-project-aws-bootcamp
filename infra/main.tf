@@ -56,7 +56,7 @@ module "myBucket" {
     APP_VERSION = "1.2.0"
     STAGE       = "prod"
     PORT        = "3000"
-    HOST_API    = "http://localhost:3000/api"
+    HOST_API    = "https://api.${var.domain_name}/api"
 
     # Security
     JWT_SECRET = var.jwt_secret_backend
@@ -77,7 +77,7 @@ module "myBucket" {
     NEXT_PUBLIC_CLERK_SIGN_UP_URL     = "/sign-up"
     NODE_ENV                          = "production"
     PORT                              = "4000"
-    NEXT_PUBLIC_API_URL               = "http://api.${var.domain_name}/api"
+    NEXT_PUBLIC_KOOBEN_API_URL        = "https://api.${var.domain_name}/api"
   }
 }
 
