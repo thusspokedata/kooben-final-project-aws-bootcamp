@@ -75,7 +75,6 @@ frontend_environment_variables = {
   NEXT_PUBLIC_CLERK_SIGN_UP_URL     = "/sign-up"
   NODE_ENV                          = "production"
   PORT                              = "4000"
-  NEXT_PUBLIC_KOOBEN_API_URL        = "https://api.${domain_name}/api" # Using HTTPS for secure communication
 }
 
 domain_name = "kooben.cc"
