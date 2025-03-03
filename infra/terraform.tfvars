@@ -35,8 +35,8 @@ rds_instance_class = "db.t4g.micro"
 
 ec2_start_stop_schedules = {
   "schedule_prod" = {
-    "cron_stop"  = "cron(00 13 ? * * *)" # 13:00 Berlin time
-    "cron_start" = "cron(45 05 ? * * *)" # 05:45 Berlin time
+    "cron_stop"  = "cron(45 05 ? * * *)" # 05:45 Berlin time
+    "cron_start" = "cron(45 21 ? * * *)" # 21:45 Berlin time
     "tag_key"    = "env"
     "tag_value"  = "prod"
   }
@@ -44,8 +44,8 @@ ec2_start_stop_schedules = {
 
 rds_start_stop_schedules = {
   "rds_schedule_dev" = {
-    "cron_stop"  = "cron(15 13 ? * * *)" # 13:15 Berlin time (15 min after EC2)
-    "cron_start" = "cron(30 05 ? * * *)" # 05:30 Berlin time (15 min before EC2)
+    "cron_stop"  = "cron(15 05 ? * * *)" # 05:15 Berlin time
+    "cron_start" = "cron(30 21 ? * * *)" # 21:30 Berlin time
     "tag_key"    = "env"
     "tag_value"  = "prod"
   }
@@ -53,14 +53,14 @@ rds_start_stop_schedules = {
 
 asg_start_stop_schedules = {
   "frontend_asg_schedule" = {
-    "cron_stop"  = "cron(00 13 ? * * *)" # 13:00 Berlin time
-    "cron_start" = "cron(45 05 ? * * *)" # 05:45 Berlin time
+    "cron_stop"  = "cron(45 05 ? * * *)" # 05:45 Berlin time
+    "cron_start" = "cron(45 21 ? * * *)" # 21:45 Berlin time
     "tag_key"    = "Name"
     "tag_value"  = "frontend-asg-*"
   },
   "backend_asg_schedule" = {
-    "cron_stop"  = "cron(00 13 ? * * *)" # 13:00 Berlin time
-    "cron_start" = "cron(45 05 ? * * *)" # 05:45 Berlin time
+    "cron_stop"  = "cron(45 05 ? * * *)" # 05:45 Berlin time
+    "cron_start" = "cron(45 21 ? * * *)" # 21:45 Berlin time
     "tag_key"    = "Name"
     "tag_value"  = "backend-asg-*"
   }
