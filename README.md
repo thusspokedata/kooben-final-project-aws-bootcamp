@@ -45,6 +45,48 @@ This automatically generated diagram shows the relationships between Terraform r
 - **How to update the graph**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
 - **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
 
+## **🚀 Infrastructure Deployment Flow**
+
+The deployment of the Kooben infrastructure follows a logical sequence that builds components in the correct dependency order. Below is an overview of the deployment process:
+
+### 1. VPC & Network (First Deployment Stage)
+- VPC created with CIDR block 10.10.0.0/24
+- Public and private subnets deployed across two availability zones
+- Internet Gateway, NAT Gateway, and Route Tables configured
+- Security Groups established for controlled traffic
+
+### 2. Storage & Database Layer
+- S3 bucket created for configurations and Docker Compose files
+- RDS PostgreSQL instance deployed in private subnet
+- KMS keys created for encryption of various resources
+- Secrets Manager configured for sensitive environment variables
+
+### 3. Load Balancing & Traffic Management
+- Application Load Balancers created for frontend and backend
+- SSL/TLS certificates provisioned via ACM
+- Target groups configured for health checks
+- Route53 DNS records created for domain routing
+
+### 4. Application Deployment
+- Launch Templates configured with user data scripts
+- Auto Scaling Groups established for frontend and backend
+- Docker containers pulled and deployed automatically
+- SNS notification topic created with email subscription prompt
+- Key Interaction Point: User receives email to confirm SNS subscription
+
+### 5. Resource Scheduling
+- CloudWatch Events/EventBridge rules created for:
+  - EC2 instances: Start at 21:45, Stop at 05:45 (Berlin time)
+  - RDS database: Start at 21:30, Stop at 05:15 (Berlin time)
+  - Auto Scaling Groups: Scale in/out based on schedule
+
+### 6. Monitoring & Security
+- CloudTrail enabled for comprehensive audit logging
+- CloudWatch Logs for application monitoring
+- VPC Flow Logs for network traffic analysis
+- KMS encryption for data at rest and in transit
+- IAM roles with least privilege principle
+
 ## **🛠️ Tools and Practices**
 This project leverages several tools and best practices:
 
