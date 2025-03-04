@@ -1,6 +1,19 @@
 # **Kooben AWS Infrastructure - Terraform Deployment**
 
-## **📌 Overview**
+## **📑 Table of Contents**
+- [Overview](#overview)
+- [Project Philosophy](#project-philosophy)
+- [Infrastructure Visualization](#infrastructure-visualization)
+- [Infrastructure Deployment Flow](#infrastructure-deployment-flow)
+- [Tools and Practices](#tools-and-practices)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Useful Links](#useful-links)
+- [Next Steps](#next-steps)
+- [Security and Monitoring](#security-and-monitoring)
+- [Personal Note](#personal-note)
+
+## **Overview**
 This repository contains the infrastructure configuration for the **Kooben** project using **Terraform**. It is designed to deploy a complete AWS-based architecture for a carpentry business application, consisting of:
 
 - **Backend**: Built with NestJS, containerized with Docker
@@ -14,7 +27,7 @@ This repository contains the infrastructure configuration for the **Kooben** pro
 The key philosophy behind this project is **Infrastructure as Code (IaC)** with approximately 98% of the infrastructure created and managed through Terraform and Terraform Cloud, minimizing the need for AWS Console interaction. Docker images are pulled directly from Docker Hub when EC2 instances are provisioned, using a bash script embedded in the Launch Template.
 
 
-## **🧠 Project Philosophy**
+## **Project Philosophy**
 The core principles guiding this project:
 
 1. **Complete Terraform Automation**: Minimize AWS Console interaction, ensuring reproducible deployments
@@ -26,7 +39,7 @@ The core principles guiding this project:
 
 The only manual interactions required with AWS were creating secret keys in AWS Secrets Manager and copying Route53 DNS records to configure in Namecheap domain settings.
 
-## **🏗️ Infrastructure Visualization**
+## **Infrastructure Visualization**
 The project includes visual representations of the infrastructure deployed with Terraform:
 
 ### Detailed Architecture Diagram
@@ -45,7 +58,7 @@ This automatically generated diagram shows the relationships between Terraform r
 - **How to update the graph**: Run `terraform graph | dot -Tsvg > documentation/graph.svg` from the `infra` directory
 - **Requirements**: GraphViz must be installed (`brew install graphviz` on macOS)
 
-## **🚀 Infrastructure Deployment Flow**
+## **Infrastructure Deployment Flow**
 
 The deployment of the Kooben infrastructure follows a logical sequence that builds components in the correct dependency order. Below is an overview of the deployment process:
 
@@ -87,7 +100,7 @@ The deployment of the Kooben infrastructure follows a logical sequence that buil
 - KMS encryption for data at rest and in transit
 - IAM roles with least privilege principle
 
-## **🛠️ Tools and Practices**
+## **Tools and Practices**
 This project leverages several tools and best practices:
 
 - **terraform fmt**: For consistent code formatting
@@ -102,7 +115,7 @@ This project leverages several tools and best practices:
 
 ---
 
-## **🛠 Project Structure**
+## **Project Structure**
 ```
 .
 ├── infra/                      # Terraform infrastructure files
@@ -146,11 +159,6 @@ This project leverages several tools and best practices:
 │   │   │   │   │   ├── main.tf
 │   │   │   │   │   ├── outputs.tf
 │   │   │   │   │   ├── variables.tf
-│   │   ├── files/               # Files module, contains extra configurations
-│   │   │   ├── docker-compose.yml
-│   │   │   ├── main.tf
-│   │   │   ├── output.tf
-│   │   │   ├── variables.tf
 │   ├── locals.tf                # Local variables for Terraform
 │   ├── main.tf                 # Main entry point for Terraform
 │   ├── outputs.tf               # Terraform output definitions
@@ -172,7 +180,7 @@ This project leverages several tools and best practices:
 
 ---
 
-## **🚀 Getting Started**
+## **Getting Started**
 ### **1️⃣ Prerequisites**
 Ensure you have the following installed:
 - [Terraform](https://developer.hashicorp.com/terraform/downloads)
@@ -202,7 +210,7 @@ tfsec                               # Perform security analysis on Terraform con
 
 ---
 
-## **🔗 Useful Links**
+## **Useful Links**
 - [Terraform Documentation](https://developer.hashicorp.com/terraform/docs)
 - [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
 - [Infracost Documentation](documentacion/tools-i-used/infracost.md)
@@ -212,7 +220,7 @@ tfsec                               # Perform security analysis on Terraform con
 - [S3 Configuration Documentation](documentacion/s3.md)
 - [Project Presentation Slides](https://docs.google.com/presentation/d/1RDNLnNYJwPCziuKn04LqG9FRlSdY0I6O5hrQIT_auRE/edit?usp=sharing)
 
-## **📌 Next Steps**
+## **Next Steps**
 - Configure Launch Templates for backend instance ✅
 - Implement cost optimization through scheduling ✅
 - Deploy new services (EC2-backend, EC2-frontend, RDS) ✅
@@ -230,7 +238,7 @@ tfsec                               # Perform security analysis on Terraform con
 
 ---
 
-## **🔒 Security and Monitoring**
+## **Security and Monitoring**
 
 ### **AWS CloudTrail**
 CloudTrail has been implemented to provide comprehensive logging of all API calls made within the AWS account. This service:
@@ -248,7 +256,7 @@ CodeGuru Security has been integrated into the CI/CD pipeline to automatically s
 
 ---
 
-## **💭 Personal Note**
+## **Personal Note**
 
 I'm incredibly proud of what has been accomplished with this project. It represents countless hours of learning, troubleshooting, and refining. Working with Terraform and Terraform Cloud has been a revelation - these tools have fundamentally changed how I approach infrastructure development.
 
