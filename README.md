@@ -231,7 +231,6 @@ tfsec                               # Perform security analysis on Terraform con
 - Implement HTTPS with AWS Certificate Manager ✅
 - Implement monitoring (CloudWatch, CloudTrail) ✅
 - Implement security scanning with AWS CodeGuru ✅
-- Automate CI/CD for Terraform deployments
 - Migrate from Docker Hub to Amazon ECR for container registry
 - Implement AWS native automation tools (CodePipeline, CodeBuild, CodeDeploy)
 - Explore AWS container management services (ECS/EKS) for improved orchestration
