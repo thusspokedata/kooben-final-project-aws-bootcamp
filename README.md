@@ -1,4 +1,4 @@
-# **Kooben AWS Infrastructure - Terraform Deployment**
+# **K'óoben AWS Infrastructure - Terraform Deployment**
 
 ## **📑 Table of Contents**
 - [Overview](#overview)
@@ -14,7 +14,7 @@
 - [Personal Note](#personal-note)
 
 ## **Overview**
-This repository contains the infrastructure configuration for the **Kooben** project using **Terraform**. It is designed to deploy a complete AWS-based architecture for a carpentry business application, consisting of:
+This repository contains the infrastructure configuration for the **K'óoben** project using **Terraform**. It is designed to deploy a complete AWS-based architecture for a carpentry business application, consisting of:
 
 - **Backend**: Built with NestJS, containerized with Docker
 - **Frontend**: Built with NextJS, containerized with Docker
